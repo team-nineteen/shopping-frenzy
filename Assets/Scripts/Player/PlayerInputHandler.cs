@@ -103,7 +103,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            return Input.GetButton(GameConstants.k_ButtonNameRightClick);
+            return Input.GetButton(GameConstants.k_ButtonNameAlternateInteract);
         }
 
         return false;

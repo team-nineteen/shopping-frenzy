@@ -24,7 +24,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Sharpness for the movement when grounded, a low value will make the player accelerate and decelerate slowly, a high value will do the opposite")]
     public float movementSharpnessOnGround = 15;
     [Tooltip("Max movement speed when crouching")]
-    [Range(0,1)]
+    [Range(0, 1)]
     public float maxSpeedCrouchedRatio = 0.5f;
     [Tooltip("Max movement speed when not grounded")]
     public float maxSpeedInAir = 10f;
@@ -38,7 +38,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Header("Rotation")]
     [Tooltip("Rotation speed for moving the camera")]
     public float rotationSpeed = 200f;
-    
+
     [Header("Jump")]
     [Tooltip("Force applied upward when jumping")]
     public float jumpForce = 9f;

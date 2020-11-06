@@ -7,14 +7,18 @@ public class Holdable : MonoBehaviour
 
     [Tooltip("How far away the item is from the person holding it")]
     public float distanceWhenHeld = 1.0f;
+    
+    [Tooltip("Should the object rotate to match the holders rotation?")]
+    public bool shouldAutoRotate = false;
+    public Rigidbody rb { get; protected set; }
+    
+    public bool isPushable {get; protected set; }
 
-    public Rigidbody rb { get; private set; }
-    private bool m_WasHeld, m_isHeld;
-    private float m_ReleaseTime;
-    public void NotifyHold(bool isHeld)
+    protected bool m_WasHeld, m_isHeld;
+    protected float m_ReleaseTime;
+    virtual public void NotifyHold(bool isHeld)
     {
         if (isHeld && !m_WasHeld) {
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
             m_WasHeld = true;
         } else {
             m_ReleaseTime = Time.fixedTime;
@@ -23,16 +27,16 @@ public class Holdable : MonoBehaviour
         m_isHeld = isHeld;
     }
 
-    void Start()
+    virtual protected void Start()
     {
         rb = GetComponentInParent<Rigidbody>();
+        isPushable = false;
     }
 
     void Update()
     {
         if (m_WasHeld && !m_isHeld && m_ReleaseTime + 1 < Time.fixedTime && rb.velocity.sqrMagnitude < 1f)
         {
-            rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
             m_WasHeld = false;
         }
     }

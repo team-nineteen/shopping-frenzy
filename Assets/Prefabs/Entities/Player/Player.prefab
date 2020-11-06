@@ -99,7 +99,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 1
-  m_Radius: 0.25
+  m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.001
@@ -236,10 +236,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   groundCheckDistance: 0.05
-  maxSpeedOnGround: 8
+  maxSpeedOnGround: 6
   movementSharpnessOnGround: 8
   maxSpeedCrouchedRatio: 0.5
-  maxSpeedInAir: 8
+  maxSpeedInAir: 7
   accelerationSpeedInAir: 15
   sprintSpeedModifier: 1.5
   killHeight: -50

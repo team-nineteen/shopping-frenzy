@@ -20,10 +20,9 @@ public class ItemHold : MonoBehaviour
 
     [Tooltip("How quickly an item will settle in the center of the screen.")]
     public float itemGravitationFriction = 0.5f;
-
+    public Holdable m_HeldItem { get; private set; }
     private PlayerInputHandler m_Input;
     private Camera m_Camera;
-    private Holdable m_HeldItem;
     private Holdable m_PointingAtItem;
     private bool m_previouslyHeld;
     private Vector3 gravitationPoint;
@@ -37,7 +36,10 @@ public class ItemHold : MonoBehaviour
     {
         // Ray that intersects through center of screen.
         m_PointingAtItem = null;
-        if (Physics.Raycast(m_Camera.transform.position, m_Camera.transform.forward, out RaycastHit hit, interactRange, -1, QueryTriggerInteraction.Ignore))
+
+        // Cast a ray through the center of the screen.
+        Ray ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange, -1, QueryTriggerInteraction.Ignore))
         {
             m_PointingAtItem = hit.collider.GetComponentInParent<Holdable>();
         }
@@ -59,11 +61,27 @@ public class ItemHold : MonoBehaviour
 
     }
 
+    // Try to center the item to the screen as best as possible while retaining physics.
     void centerGameObject(Holdable obj)
     {
+        // Calculate the point where the object should be relative to the player.
         gravitationPoint = m_Camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, m_Camera.nearClipPlane + obj.distanceWhenHeld));
 
-        Vector3 difference = (gravitationPoint - obj.transform.position) * itemGravitationSharpness;
+        // Pushable objects should gravitate much faster.
+        float effectiveSharpness = (obj.isPushable ? 10 : 1) * itemGravitationSharpness;
+        Vector3 difference = (gravitationPoint - obj.transform.position) * effectiveSharpness;
+
+        // Pushable objects should not change y position, but should rotate towards the player.
+        if (obj.isPushable)
+        {
+            difference.y = 0f;
+        }
+        if (obj.shouldAutoRotate)
+        {
+            obj.rb.MoveRotation(Quaternion.Lerp(obj.transform.rotation, transform.rotation, 0.1f));
+        }
+
+        // Apply the friction and force on holdable.
         obj.rb.velocity = obj.rb.velocity * itemGravitationFriction;
         obj.rb.AddForce(difference);
     }

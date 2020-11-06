@@ -70,8 +70,8 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Right Click
-    descriptiveName: Right Click
+    m_Name: Alt Interact
+    descriptiveName: Alternate Interact
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: f
@@ -158,8 +158,8 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: enter
     gravity: 0
-    dead: 0.19
-    sensitivity: 1
+    dead: 0
+    sensitivity: 0.1
     snap: 0
     invert: 0
     type: 0
@@ -174,11 +174,11 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: backspace
     gravity: 0
-    dead: 0.19
-    sensitivity: 1
+    dead: 0
+    sensitivity: 0.1
     snap: 0
     invert: 0
-    type: 2
+    type: 0
     axis: 0
     joyNum: 0
   - serializedVersion: 3
@@ -190,10 +190,26 @@ InputManager:
     altNegativeButton: 
     altPositiveButton: 
     gravity: 0
-    dead: 0.19
-    sensitivity: 1
+    dead: 0
+    sensitivity: 0.1
     snap: 0
     invert: 0
-    type: 2
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Debug
+    descriptiveName: Enable Debug
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: f3
+    altNegativeButton: 
+    altPositiveButton: 
+    gravity: 0
+    dead: 0
+    sensitivity: 0.1
+    snap: 0
+    invert: 0
+    type: 0
     axis: 0
     joyNum: 0

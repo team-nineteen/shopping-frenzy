@@ -9,8 +9,9 @@
     public const string k_ButtonNameInteract                = "Interact";
     public const string k_ButtonNameSprint                  = "Sprint";
     public const string k_ButtonNameCrouch                  = "Crouch";
-    public const string k_ButtonNameRightClick              = "Right Click";
+    public const string k_ButtonNameAlternateInteract       = "Alt Interact";
     public const string k_ButtonNamePauseMenu               = "Pause Menu";
     public const string k_ButtonNameSubmit                  = "Submit";
     public const string k_ButtonNameCancel                  = "Cancel";
+    public const string k_ButtonDebugView                   = "Debug";
 }
