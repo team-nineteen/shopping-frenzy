@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4430656140182164840}
   - component: {fileID: 8914737578952022346}
   - component: {fileID: 6986369441266333253}
-  - component: {fileID: 1672539247399866032}
+  - component: {fileID: 1833531699679356371}
   m_Layer: 0
   m_Name: PhysicsApple
   m_TagString: Untagged
@@ -63,7 +63,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.08
   m_Center: {x: 0, y: 0.07, z: 0}
---- !u!114 &1672539247399866032
+--- !u!114 &1833531699679356371
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,11 +72,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4430656140182164843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b3b51238ec43d44a73a836a8fec8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 29860b93a8d11be42b7c4c9ab9cd6c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWhenHeld: 0.9
   shouldAutoRotate: 0
+  registeredName: Apple
+  discountFactor: 0
+  discountAmount: 0
 --- !u!1001 &4430656138955123153
 PrefabInstance:
   m_ObjectHideFlags: 0

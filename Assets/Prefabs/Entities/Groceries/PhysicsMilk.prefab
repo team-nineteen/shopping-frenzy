@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6836081765057243298}
   - component: {fileID: 4362318773081173617}
   - component: {fileID: 7624881726277531176}
-  - component: {fileID: 8163856426995074708}
+  - component: {fileID: -4211695947150884868}
   m_Layer: 0
   m_Name: PhysicsMilk
   m_TagString: Untagged
@@ -63,7 +63,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &8163856426995074708
+--- !u!114 &-4211695947150884868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,11 +72,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3332634007832410534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b3b51238ec43d44a73a836a8fec8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 29860b93a8d11be42b7c4c9ab9cd6c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWhenHeld: 1.2
   shouldAutoRotate: 0
+  registeredName: Milk
+  discountFactor: 0
+  discountAmount: 0
 --- !u!1001 &3399462754600419829
 PrefabInstance:
   m_ObjectHideFlags: 0

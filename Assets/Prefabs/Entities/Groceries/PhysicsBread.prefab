@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2028875589234426925}
   - component: {fileID: 2028875589234426924}
   - component: {fileID: 2028875589234426923}
-  - component: {fileID: 2028875589234426922}
+  - component: {fileID: 8754529877425299103}
   m_Layer: 0
   m_Name: PhysicsBread
   m_TagString: Untagged
@@ -64,7 +64,7 @@ CapsuleCollider:
   m_Height: 0.6
   m_Direction: 2
   m_Center: {x: 0, y: 0.086, z: -0.005}
---- !u!114 &2028875589234426922
+--- !u!114 &8754529877425299103
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -73,11 +73,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 2028875589234426921}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b3b51238ec43d44a73a836a8fec8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 29860b93a8d11be42b7c4c9ab9cd6c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceWhenHeld: 1.1
+  distanceWhenHeld: 1.2
   shouldAutoRotate: 0
+  registeredName: Bread
+  discountFactor: 0
+  discountAmount: 0
 --- !u!1001 &2028875588118410043
 PrefabInstance:
   m_ObjectHideFlags: 0

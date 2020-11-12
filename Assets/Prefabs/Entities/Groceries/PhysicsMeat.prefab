@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1569171662003629994}
   - component: {fileID: 9188310081137058314}
   - component: {fileID: 7764124399450012771}
-  - component: {fileID: 3545476740228428945}
+  - component: {fileID: -5138585349268999193}
   m_Layer: 0
   m_Name: PhysicsMeat
   m_TagString: Untagged
@@ -63,7 +63,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.34, y: 0.04, z: 0.14}
   m_Center: {x: 0.010000005, y: 0.02, z: 0}
---- !u!114 &3545476740228428945
+--- !u!114 &-5138585349268999193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,11 +72,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3525151291079943706}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b3b51238ec43d44a73a836a8fec8fe, type: 3}
+  m_Script: {fileID: 11500000, guid: 29860b93a8d11be42b7c4c9ab9cd6c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWhenHeld: 1
   shouldAutoRotate: 0
+  registeredName: Meat
+  discountFactor: 0
+  discountAmount: 0
 --- !u!1001 &405489335111840633
 PrefabInstance:
   m_ObjectHideFlags: 0
