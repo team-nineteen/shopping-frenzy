@@ -125,13 +125,14 @@ public class ItemHold : MonoBehaviour
             }
         }
         if (m_HeldItem) HoldItem();
+        m_Input.isInteractToggled = (m_HeldItem != null);
         m_previouslyHeld = m_Input.GetInteractInputHeld();
     }
     void StartHoldingItem()
     {
         m_HeldItem = m_PointingAtItem;
         m_HeldItem.NotifyHold(true);
-
+        
         crosshair.ChangeTo(Crosshair.Aim.Hold);
     }
     void StopHoldingItem()
