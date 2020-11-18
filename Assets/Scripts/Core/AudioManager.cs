@@ -25,12 +25,12 @@ public class AudioManager : MonoBehaviour
         {
             if (audioMixers[i] != null)
             {
-                audioMixers[i].SetFloat(name, value);
+                audioMixers[i].SetFloat(name, Mathf.Log10(value) * 20);
             }
         }
     }
 
-    public void GetFloat(string name, out float value)
+    public void GetFloatAsDB(string name, out float value)
     {
         value = 0f;
         for (int i = 0; i < audioMixers.Length; i++)
@@ -41,5 +41,19 @@ public class AudioManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public float GetFloat(string name)
+    {
+        float value = 0f;
+        for (int i = 0; i < audioMixers.Length; i++)
+        {
+            if (audioMixers[i] != null)
+            {
+                audioMixers[i].GetFloat(name, out value);
+                break;
+            }
+        }
+        return Mathf.Pow(10f, (value / 20f));
     }
 }

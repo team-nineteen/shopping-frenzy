@@ -270,6 +270,7 @@ MonoBehaviour:
   interactRange: 1.85
   loseItemRange: 2.5
   itemGravitationSharpness: 50
+  rotationTorque: 100
   itemGravitationFriction: 0.8
 --- !u!1 &7442781921941657531
 GameObject:

@@ -85,6 +85,8 @@ public class PlayerCharacterController : MonoBehaviour
     const float k_JumpGroundingPreventionTime = 0.2f;
     const float k_GroundCheckDistanceInAir = 0.07f;
 
+    private bool stopCrouching = false;
+
     void Start()
     {
         // fetch components on the same gameObject
@@ -115,9 +117,25 @@ public class PlayerCharacterController : MonoBehaviour
         GroundCheck();
 
         // crouching
-        if (m_InputHandler.GetCrouchInputDown())
+        stopCrouching = !m_InputHandler.GetCrouchInputHeld();
+        if (m_InputHandler.crouchToggle)
         {
-            SetCrouchingState(!isCrouching, false);
+            if (m_InputHandler.GetCrouchInputDown())
+            {
+                SetCrouchingState(!isCrouching, false);
+            }
+        }
+        else
+        {
+            if (m_InputHandler.GetCrouchInputDown())
+            {
+                SetCrouchingState(true, false);
+                stopCrouching = false;
+            }
+            else if (stopCrouching)
+            {
+                SetCrouchingState(false, false);
+            }
         }
 
         UpdateCharacterHeight(false);
@@ -186,6 +204,7 @@ public class PlayerCharacterController : MonoBehaviour
             if (isSprinting)
             {
                 isSprinting = SetCrouchingState(false, false);
+                m_InputHandler.isSprintToggled = isSprinting;
             }
 
             float speedModifier = isSprinting ? sprintSpeedModifier : 1f;
@@ -356,6 +375,7 @@ public class PlayerCharacterController : MonoBehaviour
         }
 
         isCrouching = crouched;
+        m_InputHandler.isCrouchToggled = isCrouching;
         return true;
     }
 }

@@ -1371,6 +1371,8 @@ GameObject:
   - component: {fileID: 5817968032793597286}
   - component: {fileID: 5817968032793597287}
   - component: {fileID: 5817968032793597281}
+  - component: {fileID: 8563005315273705178}
+  - component: {fileID: 2016321580535145912}
   m_Layer: 0
   m_Name: GroceryCart
   m_TagString: Untagged
@@ -1427,6 +1429,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceWhenHeld: 2
   shouldAutoRotate: 1
+--- !u!65 &8563005315273705178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817968032793597284}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.95, y: 0.9, z: 1.45}
+  m_Center: {x: -0.05, y: 0.475, z: 0}
+--- !u!114 &2016321580535145912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5817968032793597284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01a3d689b918bda4d8ebeb25e6420ae9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5817968033159808910
 GameObject:
   m_ObjectHideFlags: 0

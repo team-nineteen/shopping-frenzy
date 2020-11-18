@@ -18,6 +18,9 @@ public class ItemHold : MonoBehaviour
     [Tooltip("How fast an item will gravitate towards the center of the screen")]
     public float itemGravitationSharpness = 1.0f;
 
+    [Tooltip("How strong the rotation force should be for auto-rotating (aligning) objects.")]
+    public float rotationTorque = 100f;
+
     [Tooltip("How quickly an item will settle in the center of the screen.")]
     public float itemGravitationFriction = 0.5f;
     public Holdable m_HeldItem { get; private set; }
@@ -61,6 +64,10 @@ public class ItemHold : MonoBehaviour
 
     }
 
+    private float mod(float a, float n) {
+        return ((a % n) + n) % n;
+    }
+
     // Try to center the item to the screen as best as possible while retaining physics.
     void centerGameObject(Holdable obj)
     {
@@ -78,7 +85,14 @@ public class ItemHold : MonoBehaviour
         }
         if (obj.shouldAutoRotate)
         {
-            obj.rb.MoveRotation(Quaternion.Lerp(obj.transform.rotation, transform.rotation, 0.1f));
+            // Apply a rotation force (Torque) to rotate the cart to align with the player rotation.
+            float diff = Mathf.Acos(Quaternion.Dot(obj.transform.rotation, transform.rotation));
+            if (diff > 0.01f) {
+                float cw = mod(transform.rotation.eulerAngles.y - obj.transform.rotation.eulerAngles.y, 360);
+                float ccw = mod(obj.transform.rotation.eulerAngles.y - transform.rotation.eulerAngles.y, 360);
+                float dir = cw < ccw ? 1: -1;
+                obj.rb.AddTorque(transform.up * rotationTorque * dir);
+            }
         }
 
         // Apply the friction and force on holdable.
@@ -111,13 +125,14 @@ public class ItemHold : MonoBehaviour
             }
         }
         if (m_HeldItem) HoldItem();
+        m_Input.isInteractToggled = (m_HeldItem != null);
         m_previouslyHeld = m_Input.GetInteractInputHeld();
     }
     void StartHoldingItem()
     {
         m_HeldItem = m_PointingAtItem;
         m_HeldItem.NotifyHold(true);
-
+        
         crosshair.ChangeTo(Crosshair.Aim.Hold);
     }
     void StopHoldingItem()
