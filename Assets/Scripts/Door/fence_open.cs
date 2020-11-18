@@ -17,11 +17,13 @@ public class fence_open : MonoBehaviour
     public Collider hitbox;
     public AudioSource sound;
 
+    private Vector3 spawnPos;
+
 
     // Start is called before the first frame update
     void Start()
     {
-
+        spawnPos = door.position;
     }
 
     // Update is called once per frame
@@ -62,6 +64,7 @@ public class fence_open : MonoBehaviour
         if (isClosing && timer <= 0f)
         {
             isClosing = false;
+            door.position = spawnPos;
         }
 
     }
