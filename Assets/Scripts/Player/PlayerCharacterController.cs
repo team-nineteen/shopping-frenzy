@@ -72,8 +72,10 @@ public class PlayerCharacterController : MonoBehaviour
     public bool isGrounded { get; private set; }
     public bool hasJumpedThisFrame { get; private set; }
     public bool isCrouching { get; private set; }
+    SettingsData m_SettingsData;
     PlayerInputHandler m_InputHandler;
     CharacterController m_Controller;
+    Camera m_Camera;
     Vector3 m_GroundNormal;
     Vector3 m_CharacterVelocity;
     Vector3 m_LatestImpactSpeed;
@@ -90,6 +92,13 @@ public class PlayerCharacterController : MonoBehaviour
     void Start()
     {
         // fetch components on the same gameObject
+
+        m_Camera = gameObject.GetComponentInChildren<Camera>();
+        DebugUtility.HandleErrorIfNullGetComponent<Camera, PlayerCharacterController>(m_Camera, this, gameObject);
+
+        m_SettingsData = FindObjectOfType<SettingsData>();
+        DebugUtility.HandleErrorIfNullFindObject<SettingsData, PlayerCharacterController>(m_SettingsData, this);
+
         m_Controller = GetComponent<CharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller, this, gameObject);
 
@@ -101,6 +110,13 @@ public class PlayerCharacterController : MonoBehaviour
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
         UpdateCharacterHeight(true);
+        
+        m_SettingsData.onFovChanged += SetCameraFOV;
+    }
+
+    public void SetCameraFOV(float newFOV)
+    {
+        m_Camera.fieldOfView = newFOV;
     }
 
     void Update()
@@ -118,7 +134,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         // crouching
         stopCrouching = !m_InputHandler.GetCrouchInputHeld();
-        if (m_InputHandler.crouchToggle)
+        if (m_SettingsData.toggleCrouch)
         {
             if (m_InputHandler.GetCrouchInputDown())
             {

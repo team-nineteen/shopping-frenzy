@@ -3,9 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class GameFlowManager : MonoBehaviour
 {
-    // This GameFlowManager has been edited to play levels from build settings in sequence, or return to the main menu.
-    // DO NOT CHANGE THIS SCRIPT! You may customise the audio and message prefabs it refers to, if you want.
-
+    
     [Header("Parameters")]
     private float endSceneLoadDelay = 3f;
     [Tooltip("The canvas group of the fade-to-black screen")]

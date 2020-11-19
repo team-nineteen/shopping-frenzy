@@ -3,7 +3,29 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    const string SFX_STRING = "SFXVolume";
+    const string MUS_STRING = "MusicVolume";
     public AudioMixer[] audioMixers;
+    SettingsData m_SettingsData;
+
+    void Start()
+    {
+        m_SettingsData = FindObjectOfType<SettingsData>();
+        DebugUtility.HandleErrorIfNullFindObject<SettingsData, AudioManager>(m_SettingsData, this);
+
+        m_SettingsData.onSfxVolumeChanged += OnSfxVolumeChanged;
+        m_SettingsData.onMusicVolumeChanged += OnMusicVolumeChanged;
+    }
+
+    void OnSfxVolumeChanged(float val)
+    {
+        SetFloat(SFX_STRING, val);
+    }
+
+    void OnMusicVolumeChanged(float val)
+    {
+        SetFloat(MUS_STRING, val);
+    }
 
     public AudioMixerGroup[] FindMatchingGroups(string subPath)
     {

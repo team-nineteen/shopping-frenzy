@@ -2,47 +2,41 @@
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    [Tooltip("Sensitivity multiplier for moving the camera around")]
-    public float lookSensitivity = 1f;
+    
     [Tooltip("Additional sensitivity multiplier for WebGL")]
     public float webglLookSensitivityMultiplier = 0.25f;
     [Tooltip("Limit to consider an input when using a trigger on a controller")]
     public bool invertYAxis = false;
-    [Tooltip("Should sprint be a toggle action")]
-    public bool sprintToggle = false;
-    [Tooltip("Should crouch be a toggle action")]
-    public bool crouchToggle = false;
-    [Tooltip("Should interact be a toggle action")]
-    public bool interactToggle = false;
 
     public bool isInteractToggled {get; set;} = false;
     public bool isSprintToggled {get; set;} = false;
     public bool isCrouchToggled {get; set;} = false;
     GameFlowManager m_GameFlowManager;
+    SettingsData m_SettingsData;
     public MenuManager m_PauseMenu;
     PlayerCharacterController m_PlayerCharacterController;
     bool m_InteractInputWasHeld;
 
     private void Start()
     {
+        m_SettingsData = FindObjectOfType<SettingsData>();
+        DebugUtility.HandleErrorIfNullFindObject<SettingsData, MenuManager>(m_SettingsData, this);
         m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerInputHandler>(m_PlayerCharacterController, this, gameObject);
         m_GameFlowManager = FindObjectOfType<GameFlowManager>();
         DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, PlayerInputHandler>(m_GameFlowManager, this);
-        //m_PauseMenu = GetComponent<MenuManager>();
-        //DebugUtility.HandleErrorIfNullFindObject<MenuManager, PlayerInputHandler>(m_PauseMenu, this);
-
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        if (interactToggle && Input.GetButtonDown(GameConstants.k_ButtonNameInteract))
+        if (m_SettingsData.toggleInteract && Input.GetButtonDown(GameConstants.k_ButtonNameInteract))
             isInteractToggled = !isInteractToggled;
-        if (sprintToggle && Input.GetButtonDown(GameConstants.k_ButtonNameSprint))
+        if (m_SettingsData.toggleSprint && Input.GetButtonDown(GameConstants.k_ButtonNameSprint))
             isSprintToggled = !isSprintToggled;
-        if (crouchToggle && Input.GetButtonDown(GameConstants.k_ButtonNameCrouch))
+        if (m_SettingsData.toggleCrouch && Input.GetButtonDown(GameConstants.k_ButtonNameCrouch))
             isCrouchToggled = !isCrouchToggled;
         if (!m_PauseMenu.gameObject.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu))
             m_PauseMenu.SetPauseMenuActivation(true);
@@ -117,7 +111,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            return interactToggle ? isInteractToggled : Input.GetButton(GameConstants.k_ButtonNameInteract);
+            return m_SettingsData.toggleInteract ? isInteractToggled : Input.GetButton(GameConstants.k_ButtonNameInteract);
         }
 
         return false;
@@ -137,7 +131,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         if (CanProcessInput())
         {
-            return sprintToggle ? isSprintToggled : Input.GetButton(GameConstants.k_ButtonNameSprint);
+            return m_SettingsData.toggleSprint ? isSprintToggled : Input.GetButton(GameConstants.k_ButtonNameSprint);
         }
 
         return false;
@@ -175,7 +169,7 @@ public class PlayerInputHandler : MonoBehaviour
                 i *= -1f;
 
             // apply sensitivity multiplier
-            i *= lookSensitivity * 0.01f;
+            i *= m_SettingsData.mouseSensitivity * 0.01f;
 
 #if UNITY_WEBGL
             // Mouse tends to be even more sensitive in WebGL due to mouse acceleration, so reduce it even more

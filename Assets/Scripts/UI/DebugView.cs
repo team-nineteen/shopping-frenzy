@@ -5,34 +5,37 @@ using TMPro;
 
 public class DebugView : MonoBehaviour
 {
-    public bool debugEnabled {get; private set;}
-
     [Header("FPS")]
     [Tooltip("The text field displaying the framerate")]
     public TextMeshProUGUI fpsText;
     [Tooltip("Delay between updates of the displayed framerate value")]
     public float pollingTime = 0.5f;
 
+    SettingsData m_SettingsData;
     float m_AccumulatedDeltaTime = 0f;
     int m_AccumulatedFrameCount = 0;
     void Start()
     {
-        fpsText.gameObject.SetActive(debugEnabled);
+        m_SettingsData = FindObjectOfType<SettingsData>();
+        DebugUtility.HandleErrorIfNullFindObject<SettingsData, MenuManager>(m_SettingsData, this);
+
+        fpsText.gameObject.SetActive(m_SettingsData.debugEnabled);
+
+        m_SettingsData.onDebugChanged += OnDebugChanged;
     }
 
-    public void ToggleDebug(bool enable)
+    void OnDebugChanged(bool newState)
     {
-        debugEnabled = enable;
-        fpsText.gameObject.SetActive(debugEnabled);
+        fpsText.gameObject.SetActive(newState);
     }
     void Update()
     {
         if (Input.GetButtonDown(GameConstants.k_ButtonDebugView))
         {
-            ToggleDebug(!debugEnabled);
+            m_SettingsData.debugEnabled = !m_SettingsData.debugEnabled;
         }
 
-        if (debugEnabled)
+        if (m_SettingsData.debugEnabled)
         {
             m_AccumulatedDeltaTime += Time.deltaTime;
             m_AccumulatedFrameCount++;

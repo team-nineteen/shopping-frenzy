@@ -6863,6 +6863,7 @@ MonoBehaviour:
   crouchToggle: {fileID: 7478745762894817147}
   interactToggle: {fileID: 9213758323141657154}
   backButton: {fileID: 644151269482781582}
+  isInGame: 1
 --- !u!1 &8824232397423385169
 GameObject:
   m_ObjectHideFlags: 0
