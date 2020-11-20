@@ -4,18 +4,37 @@ using UnityEngine;
 using TMPro;
 public class GroceryList : MonoBehaviour
 {
+
+    [Header("Winning Goals")]
+    [Tooltip("Max time allowed to spend in seconds.")]
+    public int timeGoalInSeconds;
+    public int moneySpentGoalInCents { get; set; } // Automatically calculated based on price of all grocery items.
+
     private List<GroceryItem> items;
     private int maxGroceries;
 
     [Tooltip("The transform that will contain the grocery list items.")]
     public Transform groceryList;
-    public TextMeshProUGUI spentText;
-    public int moneySpentInCents { get; set; }
+    public TextMeshProUGUI moneySpentText;
+    public TextMeshProUGUI timeSpentText;
+    private int moneySpentInCents;
+    private int timeSpentInSeconds;
+    private float floatSeconds;
+    private DebugView m_DebugView;
+    private WinMenuManager m_WinMenu;
+    private Score score;
+    private int acquiredItemCount;
 
-    private const string spentTextFormat = "Total Spent: €{0},{1:D2}";
     void Start()
     {
-        spentText.text = string.Format(spentTextFormat, 0, 0);
+        score = FindObjectOfType<Score>();
+        floatSeconds = 0;
+        m_DebugView = FindObjectOfType<DebugView>();
+        m_WinMenu = FindObjectOfType<WinMenuManager>();
+
+        moneySpentText.text = "Money Spent: " + Score.MoneyString(0);
+        timeSpentText.text = "Time Spent: " + Score.TimeString(0);
+
         items = new List<GroceryItem>();
         maxGroceries = groceryList.childCount;
         for (int i = 0; i < maxGroceries; i++)
@@ -24,6 +43,24 @@ public class GroceryList : MonoBehaviour
             child.gameObject.SetActive(false);
         }
         InitializeList();
+
+        m_DebugView.SetDebugGoals(Score.MoneyString(moneySpentGoalInCents), Score.TimeString(timeGoalInSeconds));
+    }
+
+
+
+    void Update()
+    {
+        if (Time.timeScale > 0) // TimeScale == 0 -> game paused
+        {
+            floatSeconds += Time.deltaTime;
+            int newTime = (int)floatSeconds;
+            if (newTime > timeSpentInSeconds)
+            {
+                timeSpentInSeconds = newTime;
+                timeSpentText.text = "Time Spent: " + Score.TimeString(timeSpentInSeconds);
+            }
+        }
     }
 
     void InitializeList()
@@ -44,6 +81,8 @@ public class GroceryList : MonoBehaviour
             text.color = Color.white;
             text.fontStyle = FontStyles.Bold;
             child.gameObject.SetActive(true);
+
+            moneySpentGoalInCents += item.basePriceInCents; // Total goal
         }
     }
 
@@ -56,24 +95,40 @@ public class GroceryList : MonoBehaviour
     }
     void Purchase(Item item)
     {
-        if (item && item.gameObject.activeSelf && !item.paid)
+        if (item && !item.paid)
         {
+            int i = items.FindIndex(x => x.id == item.id);
+            if (i >= 0 && !items[i].obtained)
+            {
+                items[i].obtained = true;
+                acquiredItemCount++;
+            }
             moneySpentInCents += item.priceInCents;
             item.paid = true;
             OnUpdate(null, item);
-            item.gameObject.SetActive(false); // Remove from cart
+            Destroy(item.gameObject); // Remove from cart
         }
     }
-    public void PurchaseAll()
+    public void PurchaseAll(List<Item> itemList)
     {
-        foreach (var listItem in items)
+        foreach (var item in itemList)
         {
-            foreach (var item in listItem.items)
-            {
-                Purchase(item);
-            }
+            Purchase(item);
         }
-        spentText.text = string.Format(spentTextFormat, moneySpentInCents / 100, moneySpentInCents % 100);
+        moneySpentText.text = "Money Spent: " + Score.MoneyString(moneySpentInCents);
+        if (acquiredItemCount >= maxGroceries)
+        {
+            EndGame();
+        }
+    }
+
+    private void EndGame()
+    {
+        score.timeInSecondsSpent = timeSpentInSeconds;
+        score.moneySpent = moneySpentInCents;
+        score.CalculateScore(moneySpentGoalInCents, timeGoalInSeconds);
+        SettingsData.Instance.ClearSubscriptions();
+        m_WinMenu.OnActivate(score);
     }
 
     public void Attach(Item item)
@@ -125,6 +180,7 @@ public class GroceryList : MonoBehaviour
     private class GroceryItem
     {
         private ItemInfo itemInfo;
+        public bool obtained = false;
         public List<Item> items;
         public int id { get { return itemInfo.id; } }
 

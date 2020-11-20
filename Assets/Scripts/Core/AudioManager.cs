@@ -10,8 +10,7 @@ public class AudioManager : MonoBehaviour
 
     void Start()
     {
-        m_SettingsData = FindObjectOfType<SettingsData>();
-        DebugUtility.HandleErrorIfNullFindObject<SettingsData, AudioManager>(m_SettingsData, this);
+        m_SettingsData = SettingsData.Instance;
 
         m_SettingsData.onSfxVolumeChanged += OnSfxVolumeChanged;
         m_SettingsData.onMusicVolumeChanged += OnMusicVolumeChanged;

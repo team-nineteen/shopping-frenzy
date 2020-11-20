@@ -3,34 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class SettingsData : MonoBehaviour
+public class SettingsData : ScriptableObject
 {
-
     private static SettingsData _instance;
 
-    public static SettingsData Instance { get { return _instance; } }
-    private void Awake()
+    public static SettingsData Instance
     {
-        if (_instance != null && _instance != this)
+        get
         {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-
-            SetDefaults();
+            if (_instance == null)
+            {
+                _instance = ScriptableObject.CreateInstance<SettingsData>();
+                _instance.SetDefaults();
+            }
+            return _instance;
         }
     }
 
+    private Score highScore;
     public UnityAction<float> onFovChanged;
     public UnityAction<bool> onDebugChanged;
     public UnityAction<float> onSfxVolumeChanged;
     public UnityAction<float> onMusicVolumeChanged;
-    AudioManager m_AudioManager;
 
+    public void ClearSubscriptions() {
+        onFovChanged = null;
+        onDebugChanged = null;
+    }
     void SetDefaults()
     {
+        highScore = null;
         mouseSensitivity = 1.0f;
         fov = 70.0f;
         sfxVolume = 1.0f;

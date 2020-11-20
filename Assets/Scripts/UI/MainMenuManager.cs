@@ -10,7 +10,7 @@ public class MainMenuManager : MonoBehaviour
     public Button CreditsButton;
     public Button QuitButton;
 
-    public MenuManager m_PauseMenu;
+    public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
     void Start()

@@ -195,11 +195,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1315839542190839937}
-  - component: {fileID: 2507206886952296483}
   - component: {fileID: 6374382463133545864}
   - component: {fileID: 3155834950831495139}
   - component: {fileID: 883821338479218191}
   - component: {fileID: 7752776035389660427}
+  - component: {fileID: 952211601365865942}
   m_Layer: 5
   m_Name: GameManager
   m_TagString: Untagged
@@ -222,21 +222,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2507206886952296483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1315839542190839943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffbbcc4a5db4d4347add24687be332dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endGameFadeCanvasGroup: {fileID: 6089522275397732777}
-  victorySound: {fileID: 0}
-  ReplayScene: 0
 --- !u!114 &6374382463133545864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,9 +248,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f18d65ca44f3804cbf9221b95e34000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugEnabled: 0
+  root: {fileID: 0}
   fpsText: {fileID: 0}
   pollingTime: 0.5
+  moneyGoalText: {fileID: 0}
+  timeGoalText: {fileID: 0}
 --- !u!114 &883821338479218191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,8 +265,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc5a59936e9d8145964849d7769f3a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeGoalInSeconds: 180
   groceryList: {fileID: 0}
-  spentText: {fileID: 0}
+  moneySpentText: {fileID: 0}
+  timeSpentText: {fileID: 0}
 --- !u!82 &7752776035389660427
 AudioSource:
   m_ObjectHideFlags: 0
@@ -377,3 +366,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &952211601365865942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1315839542190839943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd38941a779c9843bd2148526e8902c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

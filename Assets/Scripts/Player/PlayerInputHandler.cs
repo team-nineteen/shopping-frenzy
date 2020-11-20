@@ -11,20 +11,21 @@ public class PlayerInputHandler : MonoBehaviour
     public bool isInteractToggled {get; set;} = false;
     public bool isSprintToggled {get; set;} = false;
     public bool isCrouchToggled {get; set;} = false;
-    GameFlowManager m_GameFlowManager;
     SettingsData m_SettingsData;
-    public MenuManager m_PauseMenu;
+    private InGameMenuManager m_PauseMenu;
+    private WinMenuManager m_WinMenu;
     PlayerCharacterController m_PlayerCharacterController;
     bool m_InteractInputWasHeld;
 
     private void Start()
     {
-        m_SettingsData = FindObjectOfType<SettingsData>();
-        DebugUtility.HandleErrorIfNullFindObject<SettingsData, MenuManager>(m_SettingsData, this);
+        m_SettingsData = SettingsData.Instance;
+        m_PauseMenu = FindObjectOfType<InGameMenuManager>();
+        DebugUtility.HandleErrorIfNullFindObject<InGameMenuManager, PlayerInputHandler>(m_PauseMenu, this);
+        m_WinMenu = FindObjectOfType<WinMenuManager>();
+        DebugUtility.HandleErrorIfNullFindObject<WinMenuManager, PlayerInputHandler>(m_WinMenu, this);
         m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerInputHandler>(m_PlayerCharacterController, this, gameObject);
-        m_GameFlowManager = FindObjectOfType<GameFlowManager>();
-        DebugUtility.HandleErrorIfNullFindObject<GameFlowManager, PlayerInputHandler>(m_GameFlowManager, this);
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -49,7 +50,7 @@ public class PlayerInputHandler : MonoBehaviour
 
     public bool CanProcessInput()
     {
-        return Cursor.lockState == CursorLockMode.Locked && !m_GameFlowManager.gameIsEnding;
+        return Cursor.lockState == CursorLockMode.Locked && !m_WinMenu.isActivated;
     }
 
     public Vector3 GetMoveInput()

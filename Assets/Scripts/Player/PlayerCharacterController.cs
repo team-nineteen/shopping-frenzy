@@ -96,8 +96,7 @@ public class PlayerCharacterController : MonoBehaviour
         m_Camera = gameObject.GetComponentInChildren<Camera>();
         DebugUtility.HandleErrorIfNullGetComponent<Camera, PlayerCharacterController>(m_Camera, this, gameObject);
 
-        m_SettingsData = FindObjectOfType<SettingsData>();
-        DebugUtility.HandleErrorIfNullFindObject<SettingsData, PlayerCharacterController>(m_SettingsData, this);
+        m_SettingsData = SettingsData.Instance;
 
         m_Controller = GetComponent<CharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<CharacterController, PlayerCharacterController>(m_Controller, this, gameObject);
@@ -110,10 +109,17 @@ public class PlayerCharacterController : MonoBehaviour
         // force the crouch state to false when starting
         SetCrouchingState(false, true);
         UpdateCharacterHeight(true);
-        
-        m_SettingsData.onFovChanged += SetCameraFOV;
-    }
 
+        m_SettingsData.onFovChanged += SetCameraFOV;
+
+        PlayGame(); // Start the game time scale stuff.
+    }
+    private void PlayGame()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
+    }
     public void SetCameraFOV(float newFOV)
     {
         m_Camera.fieldOfView = newFOV;
