@@ -73,9 +73,15 @@ public class fence_open : MonoBehaviour
     {
         if (!isOpening)
         {
-            isOpening = true;
-            timer = timerLength;
-            if (sound) sound.Play();
+            if (!isClosing)
+            {
+                if (!wait)
+                {
+                    isOpening = true;
+                    timer = timerLength;
+                    if (sound) sound.Play();
+                }
+            }
         }
     }
 }

@@ -53,10 +53,12 @@ public class door_open : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!isOpening)
-        {
-            isOpening = true;
-            timer = timerLength;
-            if (sound) sound.Play();
+        {   if (!isClosing)
+            {
+                isOpening = true;
+                timer = timerLength;
+                if (sound) sound.Play();
+            }
         }
     }
 }
