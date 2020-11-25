@@ -9,8 +9,15 @@ env:
 
 jobs:
   build:
-    name: Build the Unity Project
+    name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2019.4.9f1
+        targetPlatform:
+          - WebGL
     steps:
       # Checkout
       - name: Checkout repository
@@ -24,18 +31,19 @@ jobs:
           path: Library
           key: Library
 
-      # Test
-      - name: Run tests
-        uses: webbertakken/unity-test-runner@v1.3
-        with:
-          unityVersion: 2019.4.9f1
+      ## Test
+      #- name: Run tests
+      #  uses: webbertakken/unity-test-runner@v1.3
+      #  with:
+      #    ${{ matrix.unityVersion }}
 
       # Build
       - name: Build project
         uses: webbertakken/unity-builder@v0.10
         with:
-          unityVersion: 2019.4.9f1
-          targetPlatform: WebGL
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+          versioning: Semantic
 
       # Output
       - uses: actions/upload-artifact@v1
