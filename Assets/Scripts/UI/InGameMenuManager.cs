@@ -2,11 +2,9 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviour
+public class InGameMenuManager : MonoBehaviour
 {
 
-    const string SFX_STRING = "SFXVolume";
-    const string MUS_STRING = "MusicVolume";
 
     [Tooltip("Root GameObject of the menu used to toggle its activation")]
     public GameObject menuRoot;
@@ -35,31 +33,25 @@ public class MenuManager : MonoBehaviour
     public Toggle interactToggle;
     [Tooltip("Button component for going back")]
     public Button backButton;
+    [Tooltip("Button component for going back to game/main menu")]
+    public Button returnToGameButton;
 
-    PlayerInputHandler m_PlayerInputsHandler;
-    Camera m_PlayerCamera;
-    DebugView m_DebugView;
+    [Tooltip("Whether to apply certain game-pause, cursor-lock mechanics")]
+    public bool isInGame = true;
 
-    AudioManager m_AudioManager;
+    SettingsData m_SettingsData;
+
     void Start()
     {
-        m_PlayerInputsHandler = FindObjectOfType<PlayerInputHandler>();
-        DebugUtility.HandleErrorIfNullFindObject<PlayerInputHandler, MenuManager>(m_PlayerInputsHandler, this);
 
-        m_PlayerCamera = FindObjectOfType<PlayerCharacterController>().GetComponentInChildren<Camera>();
-        DebugUtility.HandleErrorIfNullFindObject<Camera, MenuManager>(m_PlayerCamera, this);
-
-        m_DebugView = FindObjectOfType<DebugView>();
-        DebugUtility.HandleErrorIfNullFindObject<DebugView, MenuManager>(m_DebugView, this);
-
-        m_AudioManager = FindObjectOfType<AudioManager>();
-        DebugUtility.HandleErrorIfNullFindObject<AudioManager, MenuManager>(m_AudioManager, this);
+        m_SettingsData = SettingsData.Instance;
 
         fovSlider.onValueChanged.AddListener(OnFovChanged);
         sfxVolumeSlider.onValueChanged.AddListener(OnSFXChanged);
         musicVolumeSlider.onValueChanged.AddListener(OnMusicChanged);
         debugToggle.onValueChanged.AddListener(OnDebugChanged);
         controlsButton.onClick.AddListener(OnControlsClicked);
+        returnToGameButton.onClick.AddListener(OnReturnToGameButtonClicked);
 
         // CONTROLS MENU
         sensitivitySlider.onValueChanged.AddListener(OnSensitivityChanged);
@@ -76,20 +68,20 @@ public class MenuManager : MonoBehaviour
 
     private void UpdateValues()
     {
-        fovSlider.value = m_PlayerCamera.fieldOfView;
-        sfxVolumeSlider.value = m_AudioManager.GetFloat(SFX_STRING);
-        musicVolumeSlider.value = m_AudioManager.GetFloat(MUS_STRING);
-        debugToggle.isOn = m_DebugView.debugEnabled;
-        sensitivitySlider.value = m_PlayerInputsHandler.lookSensitivity;
-        sprintToggle.isOn = m_PlayerInputsHandler.sprintToggle;
-        crouchToggle.isOn = m_PlayerInputsHandler.crouchToggle;
-        interactToggle.isOn = m_PlayerInputsHandler.interactToggle;
+        fovSlider.value = m_SettingsData.fov;
+        sfxVolumeSlider.value = m_SettingsData.sfxVolume;
+        musicVolumeSlider.value = m_SettingsData.musicVolume;
+        debugToggle.isOn = m_SettingsData.debugEnabled;
+        sensitivitySlider.value = m_SettingsData.mouseSensitivity;
+        sprintToggle.isOn = m_SettingsData.toggleSprint;
+        crouchToggle.isOn = m_SettingsData.toggleCrouch;
+        interactToggle.isOn = m_SettingsData.toggleInteract;
     }
 
     private void Update()
     {
         // Lock cursor when clicking outside of menu
-        if (!menuRoot.activeSelf && Input.GetMouseButtonDown(0))
+        if (isInGame && !menuRoot.activeSelf && Input.GetMouseButtonDown(0))
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -122,74 +114,84 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void ClosePauseMenu()
-    {
-        SetPauseMenuActivation(false);
-    }
-
     public void SetPauseMenuActivation(bool active)
     {
         menuRoot.SetActive(active);
 
         if (menuRoot.activeSelf)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0f;
-
+            if (isInGame)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                Time.timeScale = 0f;
+            }
             EventSystem.current.SetSelectedGameObject(null);
             UpdateValues();
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            Time.timeScale = 1f;
+            if (isInGame)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                EventSystem.current.SetSelectedGameObject(FindObjectOfType<Button>().gameObject);
+            }
         }
     }
 
     void OnSensitivityChanged(float newValue)
     {
-        m_PlayerInputsHandler.lookSensitivity = newValue;
+        m_SettingsData.mouseSensitivity = newValue;
     }
 
     void OnFovChanged(float newValue)
     {
-        m_PlayerCamera.fieldOfView = newValue;
+        m_SettingsData.fov = newValue;
     }
 
     void OnSFXChanged(float newValue)
     {
-        m_AudioManager.SetFloat(SFX_STRING, newValue);
+        m_SettingsData.sfxVolume = newValue;
     }
     void OnMusicChanged(float newValue)
     {
-        m_AudioManager.SetFloat(MUS_STRING, newValue);
+        m_SettingsData.musicVolume = newValue;
     }
     void OnDebugChanged(bool newValue)
     {
-        m_DebugView.ToggleDebug(newValue);
+        m_SettingsData.debugEnabled = newValue;
     }
     void OnControlsClicked()
     {
         controlRoot.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(sensitivitySlider.gameObject);
     }
 
     void OnBackButtonClicked()
     {
         controlRoot.SetActive(false);
     }
+
+    void OnReturnToGameButtonClicked()
+    {
+        SetPauseMenuActivation(false);
+    }
     void OnSprintToggle(bool newValue)
     {
-        m_PlayerInputsHandler.sprintToggle = newValue;
+        m_SettingsData.toggleSprint = newValue;
     }
     void OnCrouchToggle(bool newValue)
     {
-        m_PlayerInputsHandler.crouchToggle = newValue;
+        m_SettingsData.toggleCrouch = newValue;
     }
     void OnInteractToggle(bool newValue)
     {
-        m_PlayerInputsHandler.interactToggle = newValue;
+        m_SettingsData.toggleInteract = newValue;
     }
 
 }
