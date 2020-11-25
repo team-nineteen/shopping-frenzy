@@ -14,7 +14,6 @@ public class Item : Holdable
     public int priceInCents { get { return (int)(info.basePriceInCents * (1f - discountFactor) - discountAmount); } }
     private ItemInfo info;
     public bool paid {get; set;}
-    public bool inCart {get; set;}
     public int id { get { return info.id; } }
 
     protected override void Start()

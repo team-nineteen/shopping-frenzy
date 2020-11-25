@@ -1,0 +1,21 @@
+================================= AUDIO =================================
+
+MUSIC -------------------------------------------------------------------
+FILE                         CREDITS
+Jazzapation.mp3              https://www.dl-sounds.com/royalty-free/jazzapation/
+The Stars.mp3                https://www.dl-sounds.com/royalty-free/the-stars/
+Elevator Ride to Hell.mp3    Adam Monroe/Adam Kopcinski
+Picket Fences.mp3            Jay Man | OurMusicBox
+Playful Fun Days.mp3         Jay Man
+
+SFX ---------------------------------------------------------------------
+This game uses these sounds from freesound:
+Escalator 3.WAV by Sandermotions 
+20170101 Slide Glass Door 02 by kijjaz 
+GATE: by German1990 
+Wheely Chair.wav by Jeanet_Henning 
+Cash Register Purchase by Zott820
+
+=============================== GRAPHICS ================================
+
+FoodAndGrocery               https://assetstore.unity.com/packages/3d/props/food/food-grocery-items-low-poly-75494

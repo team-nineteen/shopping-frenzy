@@ -6,13 +6,15 @@ public class GroceryCart : MonoBehaviour
 {
 
     private GroceryList groceryList;
+    private List<Item> items;
     
     void Start() {
         groceryList = GameObject.Find("GameManager").GetComponent<GroceryList>();
+        items = new List<Item>();
     }
 
     public void OnShopLeave() {
-        groceryList.PurchaseAll();
+        groceryList.PurchaseAll(items);
     }
 
     void OnTriggerExit(Collider other) {
@@ -28,14 +30,12 @@ public class GroceryCart : MonoBehaviour
         }
     }
     void OnCartEnter(Item item) {
-        if (item && item.gameObject.activeSelf) {
-            groceryList.Attach(item);
-        }
+        groceryList.Attach(item);
+        items.Add(item);
     }
 
     void OnCartLeave(Item item) {
-        if (item && item.gameObject.activeSelf) {
-            groceryList.Dettach(item);
-        }
+        groceryList.Dettach(item);
+        items.Remove(item);
     }
 }
