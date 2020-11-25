@@ -60,7 +60,7 @@ public class AudioUtility
         if (m_AudioManager == null)
             m_AudioManager = GameObject.FindObjectOfType<AudioManager>();
 
-        m_AudioManager.GetFloat("MasterVolume", out var valueInDB);
+        m_AudioManager.GetFloatAsDB("MasterVolume", out var valueInDB);
         return Mathf.Pow(10f, valueInDB / 20.0f);
     }
 }

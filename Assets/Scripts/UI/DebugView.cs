@@ -5,7 +5,7 @@ using TMPro;
 
 public class DebugView : MonoBehaviour
 {
-    public bool debugEnabled = false;
+    public bool debugEnabled {get; private set;}
 
     [Header("FPS")]
     [Tooltip("The text field displaying the framerate")]
@@ -19,12 +19,17 @@ public class DebugView : MonoBehaviour
     {
         fpsText.gameObject.SetActive(debugEnabled);
     }
+
+    public void ToggleDebug(bool enable)
+    {
+        debugEnabled = enable;
+        fpsText.gameObject.SetActive(debugEnabled);
+    }
     void Update()
     {
         if (Input.GetButtonDown(GameConstants.k_ButtonDebugView))
         {
-            debugEnabled = !debugEnabled;
-            fpsText.gameObject.SetActive(debugEnabled);
+            ToggleDebug(!debugEnabled);
         }
 
         if (debugEnabled)

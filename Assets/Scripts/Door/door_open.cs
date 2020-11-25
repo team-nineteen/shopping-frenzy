@@ -56,7 +56,7 @@ public class door_open : MonoBehaviour
         {
             isOpening = true;
             timer = timerLength;
-            sound.Play();
+            if (sound) sound.Play();
         }
     }
 }
