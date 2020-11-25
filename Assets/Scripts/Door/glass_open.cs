@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class glass_open : MonoBehaviour
 {
+    private Vector3 spawnPosR;
+    private Vector3 spawnPosL;
     public float speed = 1f;
     bool isOpening = false;
     bool isClosing = false;
@@ -22,7 +24,8 @@ public class glass_open : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        spawnPosR = doorRight.position;
+        spawnPosL = doorLeft.position;
     }
 
     // Update is called once per frame
@@ -64,6 +67,8 @@ public class glass_open : MonoBehaviour
         }
         if (isClosing && timer <= 0f)
         {
+            doorRight.position = spawnPosR;
+            doorLeft.position = spawnPosL;
             isClosing = false;
         }
 
@@ -72,10 +77,16 @@ public class glass_open : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if (!isOpening)
-        {
-            isOpening = true;
-            timer = timerLength;
-            if (sound) sound.Play();
+        {  
+            if (!isClosing)
+            {
+                if (!wait)
+                {
+                    isOpening = true;
+                    timer = timerLength;
+                    if (sound) sound.Play();
+                }
+            }
         }
     }
 }
