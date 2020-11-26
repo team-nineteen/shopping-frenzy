@@ -2,9 +2,15 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
+
+    [Tooltip("The game version string.")]
+    public string version;
+    public bool stable;
+    public TextMeshProUGUI versionText;
     public Button StartButton;
     public Button SettingsButton;
     public Button CreditsButton;
@@ -15,6 +21,7 @@ public class MainMenuManager : MonoBehaviour
 
     void Start()
     {
+        versionText.text = "Version: " + version + (stable ? " (Stable)" : " (Unstable)");
         StartButton.onClick.AddListener(OnStartButtonClicked);
         SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
         CreditsButton.onClick.AddListener(OnCreditsButtonClicked);

@@ -61,8 +61,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.13, z: 0.12}
-  m_Center: {x: 0, y: 0.065, z: 0}
+  m_Size: {x: 0.18, y: 0.195, z: 0.18}
+  m_Center: {x: 0, y: 0.0975, z: 0}
 --- !u!114 &8754529877425299103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29860b93a8d11be42b7c4c9ab9cd6c3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceWhenHeld: 0.7
+  distanceWhenHeld: 1.1
   shouldAutoRotate: 0
   registeredName: JoghurtBlue
   discountFactor: 0
@@ -141,15 +141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010320231238, guid: f45dd85a422d0ed4a907ac22a4b6e546, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4000010320231238, guid: f45dd85a422d0ed4a907ac22a4b6e546, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4000010320231238, guid: f45dd85a422d0ed4a907ac22a4b6e546, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f45dd85a422d0ed4a907ac22a4b6e546, type: 3}

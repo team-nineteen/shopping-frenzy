@@ -9,14 +9,23 @@ public class GroceryList : MonoBehaviour
     [Tooltip("Max time allowed to spend in seconds.")]
     public int timeGoalInSeconds;
     public int moneySpentGoalInCents { get; set; } // Automatically calculated based on price of all grocery items.
-
-    private List<GroceryItem> items;
-    private int maxGroceries;
-
-    [Tooltip("The transform that will contain the grocery list items.")]
-    public Transform groceryList;
+    [Tooltip("Money Spent Text")]
     public TextMeshProUGUI moneySpentText;
+    [Tooltip("Time Spent Text")]
     public TextMeshProUGUI timeSpentText;
+
+    [Header("Grocery List")]
+    [Tooltip("The rendering texture of the grocery list.")]
+    public Transform textureRoot;
+    [Tooltip("List of sprites signifying bought status")]
+    public Transform boughtStatusList;
+    [Tooltip("List of sprites signifying in-cart status")]
+    public Transform inCartStatusList;
+    [Tooltip("List of Registered items for Items in Scene")]
+    public Transform itemRegistryList;
+    [Tooltip("List of Display Slots for Items in Scene")]
+    public Transform displayItemList;
+    private const int maxGroceries = 9;
     private int moneySpentInCents;
     private int timeSpentInSeconds;
     private float floatSeconds;
@@ -25,29 +34,43 @@ public class GroceryList : MonoBehaviour
     private Score score;
     private int acquiredItemCount;
 
+    enum ItemState
+    {
+        None,
+        Unobtained,
+        InCart,
+        Bought
+    }
+
+    private Dictionary<int, int> itemIndexMap;
+    private Dictionary<int, GroceryItem> groceryItemIdMap;
+
     void Start()
     {
-        score = FindObjectOfType<Score>();
         floatSeconds = 0;
+        score = FindObjectOfType<Score>();
         m_DebugView = FindObjectOfType<DebugView>();
         m_WinMenu = FindObjectOfType<WinMenuManager>();
 
         moneySpentText.text = "Money Spent: " + Score.MoneyString(0);
         timeSpentText.text = "Time Spent: " + Score.TimeString(0);
 
-        items = new List<GroceryItem>();
-        maxGroceries = groceryList.childCount;
-        for (int i = 0; i < maxGroceries; i++)
-        {
-            var child = groceryList.GetChild(i);
-            child.gameObject.SetActive(false);
-        }
+        itemIndexMap = new Dictionary<int, int>();
+        groceryItemIdMap = new Dictionary<int, GroceryItem>();
         InitializeList();
-
         m_DebugView.SetDebugGoals(Score.MoneyString(moneySpentGoalInCents), Score.TimeString(timeGoalInSeconds));
     }
 
-
+    private void SetTextColor(TextMeshProUGUI txt, int spent, int goal, float margin = 1.5f)
+    {
+        if (spent < goal) return;
+        if (spent == goal)
+            txt.color = Color.green;
+        else if (spent < goal * margin)
+            txt.color = Color.yellow;
+        else
+            txt.color = Color.red;
+    }
 
     void Update()
     {
@@ -59,67 +82,75 @@ public class GroceryList : MonoBehaviour
             {
                 timeSpentInSeconds = newTime;
                 timeSpentText.text = "Time Spent: " + Score.TimeString(timeSpentInSeconds);
+                SetTextColor(timeSpentText, timeSpentInSeconds, timeGoalInSeconds);
             }
+            AnimateGroceriesInCart();
         }
     }
-
-    void InitializeList()
+    void AnimateGroceriesInCart()
     {
-        List<ItemInfo> itemListCopy = new List<ItemInfo>();
-        itemListCopy.AddRange(ItemRegistry.GetList());
-
+        foreach (int id in groceryItemIdMap.Keys)
+            if (groceryItemIdMap[id].state == ItemState.InCart)
+                displayItemList.GetChild(itemIndexMap[id]).Rotate(Vector3.up, Time.deltaTime * 90);
+    }
+    private void InitializeList()
+    {
         for (int i = 0; i < maxGroceries; i++)
         {
-            int r = itemListCopy.Count < 2 ? 0 : Random.Range(1, itemListCopy.Count); // Throw empty when all have been selected.
-            ItemInfo item = itemListCopy[r];
-            items.Add(new GroceryItem(item));
-            if (r > 0) itemListCopy.RemoveAt(r);
-
-            var child = groceryList.GetChild(i);
-            var text = child.GetComponent<TextMeshProUGUI>();
-            text.text = item.displayName;
-            text.color = Color.white;
-            text.fontStyle = FontStyles.Bold;
-            child.gameObject.SetActive(true);
-
-            moneySpentGoalInCents += item.basePriceInCents; // Total goal
+            int r = itemRegistryList.childCount < 2 ? 0 : Random.Range(1, itemRegistryList.childCount);
+            Transform displayItem = itemRegistryList.GetChild(r);
+            Item item = displayItem.GetComponent<Item>();
+            ItemInfo itemInfo = ItemRegistry.GetByName(item.registeredName);
+            GroceryItem gi = new GroceryItem(itemInfo);
+            itemIndexMap.Add(gi.id, i);
+            groceryItemIdMap.Add(gi.id, gi);
+            if (r > 0)
+            {
+                displayItem.SetParent(displayItemList.GetChild(i));
+                displayItem.localPosition = Vector2.zero;
+                displayItem.localRotation = Quaternion.identity;
+                SetItemState(gi.id, ItemState.Unobtained);
+            }
+            moneySpentGoalInCents += itemInfo.basePriceInCents; // Total goal
         }
     }
 
-    TextMeshProUGUI GetTextComponent(Item item)
+    // Enable: True to gray out item.
+    private void GrayOut(int id, bool enable)
     {
-        int i = items.FindIndex(x => x.id == item.id);
-        if (i < 0) return null;
-        var child = groceryList.GetChild(i);
-        return child.GetComponent<TextMeshProUGUI>();
+        Transform disp = displayItemList.GetChild(itemIndexMap[id]);
+        disp.localPosition = new Vector3(disp.localPosition.x, disp.localPosition.y, enable ? 15 : 5);
     }
-    void Purchase(Item item)
+
+    private void SetItemState(int itemId, ItemState newState)
+    {
+        int i = itemIndexMap[itemId];
+        GrayOut(itemId, newState == ItemState.Bought);
+        inCartStatusList.GetChild(i).gameObject.SetActive(newState == ItemState.InCart);
+        boughtStatusList.GetChild(i).gameObject.SetActive(newState == ItemState.Bought);
+        groceryItemIdMap[itemId].state = newState;
+    }
+
+    private void Purchase(Item item)
     {
         if (item && !item.paid)
         {
-            int i = items.FindIndex(x => x.id == item.id);
-            if (i >= 0 && !items[i].obtained)
+            if (groceryItemIdMap.TryGetValue(item.id, out GroceryItem gi) && gi.state != ItemState.Bought)
             {
-                items[i].obtained = true;
                 acquiredItemCount++;
+                SetItemState(item.id, ItemState.Bought);
             }
             moneySpentInCents += item.priceInCents;
             item.paid = true;
-            OnUpdate(null, item);
             Destroy(item.gameObject); // Remove from cart
         }
     }
     public void PurchaseAll(List<Item> itemList)
     {
-        foreach (var item in itemList)
-        {
-            Purchase(item);
-        }
+        foreach (var item in itemList) Purchase(item);
         moneySpentText.text = "Money Spent: " + Score.MoneyString(moneySpentInCents);
-        if (acquiredItemCount >= maxGroceries)
-        {
-            EndGame();
-        }
+        SetTextColor(moneySpentText, moneySpentInCents, moneySpentGoalInCents);
+        if (acquiredItemCount >= maxGroceries) EndGame();
     }
 
     private void EndGame()
@@ -133,60 +164,35 @@ public class GroceryList : MonoBehaviour
 
     public void Attach(Item item)
     {
-        GroceryItem gi = items.Find(i => (i != null) && (i.id == item.id));
-        if (gi != null)
+        if (item != null && groceryItemIdMap.TryGetValue(item.id, out GroceryItem gi))
         {
             gi.items.Add(item); // Bind this current item.
-            OnUpdate(gi, item);
+            if (gi.state != ItemState.Bought && gi.items.Count == 1) // If this is the first item attached of this type.
+                SetItemState(item.id, ItemState.InCart);
         }
     }
 
     public void Dettach(Item item)
     {
-        GroceryItem gi = items.Find(i => (i != null) && (i.id == item.id));
-        if (gi != null)
+        if (item != null && groceryItemIdMap.TryGetValue(item.id, out GroceryItem gi))
         {
             gi.items.Remove(item);
-            OnUpdate(gi, item);
-        }
-    }
-
-    void OnUpdate(GroceryItem gi, Item item)
-    {
-        var text = GetTextComponent(item);
-        if (text == null) // Nonlist items are not displayed.
-            return;
-        if (item.paid)
-        {
-            text.color = Color.grey;
-            text.fontStyle = FontStyles.Strikethrough;
-        }
-        else
-        {
-            if (gi == null || text.color == Color.grey) return;
-            if (gi.items.Count > 0) // Got at least 1 of these items.
-            {
-                text.color = Color.cyan;
-                text.fontStyle = FontStyles.Normal;
-            }
-            else
-            {
-                text.color = Color.white;
-                text.fontStyle = FontStyles.Bold;
-            }
+            if (gi.state != ItemState.Bought && gi.items.Count == 0) // If this is the last item attached of this type.
+                SetItemState(item.id, ItemState.Unobtained);
         }
     }
 
     private class GroceryItem
     {
         private ItemInfo itemInfo;
-        public bool obtained = false;
+        public ItemState state;
         public List<Item> items;
         public int id { get { return itemInfo.id; } }
 
         public GroceryItem(ItemInfo itemInfo)
         {
             this.itemInfo = itemInfo;
+            state = itemInfo.id == 0 ? ItemState.None : ItemState.Unobtained;
             items = new List<Item>();
         }
     }

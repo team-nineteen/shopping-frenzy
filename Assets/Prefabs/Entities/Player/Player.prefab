@@ -42,7 +42,7 @@ Projector:
   serializedVersion: 2
   m_NearClipPlane: 0.1
   m_FarClipPlane: 2.5
-  m_FieldOfView: 60
+  m_FieldOfView: 70
   m_AspectRatio: 1
   m_Orthographic: 1
   m_OrthographicSize: 0.7
@@ -117,7 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5f71a7d84ddab745a3e4bb2ede2d351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookSensitivity: 1
   webglLookSensitivityMultiplier: 0.25
   invertYAxis: 0
 --- !u!82 &6312523899654289942
