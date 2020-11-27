@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: -360379619617977288, guid: 2d45d5889dbdefe4792ca508fb068307,
         type: 3}
       propertyPath: version
-      value: 0.8.0+randomize-groceries@1
+      value: 0.8.0+play-test-demo@1
       objectReference: {fileID: 0}
     - target: {fileID: 2020788898990062898, guid: 2d45d5889dbdefe4792ca508fb068307,
         type: 3}
@@ -167,6 +167,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4430881120144615886, guid: 2d45d5889dbdefe4792ca508fb068307,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 5010423020672979427, guid: 2d45d5889dbdefe4792ca508fb068307,
         type: 3}
