@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Sandwich
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 4
 --- !u!1001 &6488925087703967088
 PrefabInstance:
   m_ObjectHideFlags: 0

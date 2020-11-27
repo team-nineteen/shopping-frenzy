@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: ChipsRed
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &8343701164040860110
 PrefabInstance:
   m_ObjectHideFlags: 0

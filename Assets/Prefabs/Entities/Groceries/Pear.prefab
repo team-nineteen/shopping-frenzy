@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Pear
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &3040706053765785992
 PrefabInstance:
   m_ObjectHideFlags: 0

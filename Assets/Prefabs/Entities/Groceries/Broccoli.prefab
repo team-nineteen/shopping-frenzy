@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Broccoli
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &830633353570738480
 PrefabInstance:
   m_ObjectHideFlags: 0

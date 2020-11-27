@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: CanBlack
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &4830038186621807884
 PrefabInstance:
   m_ObjectHideFlags: 0

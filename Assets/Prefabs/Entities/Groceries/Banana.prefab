@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Banana
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &3700011601738718927
 PrefabInstance:
   m_ObjectHideFlags: 0

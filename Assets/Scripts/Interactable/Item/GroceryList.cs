@@ -158,6 +158,9 @@ public class GroceryList : MonoBehaviour
         score.timeInSecondsSpent = timeSpentInSeconds;
         score.moneySpent = moneySpentInCents;
         score.CalculateScore(moneySpentGoalInCents, timeGoalInSeconds);
+        if (SettingsData.Instance.highScore == null || SettingsData.Instance.highScore.score < score.score) {
+            SettingsData.Instance.highScore = score;
+        }
         SettingsData.Instance.ClearSubscriptions();
         m_WinMenu.OnActivate(score);
     }

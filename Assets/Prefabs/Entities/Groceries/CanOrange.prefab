@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: CanOrange
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &1253273682666054399
 PrefabInstance:
   m_ObjectHideFlags: 0

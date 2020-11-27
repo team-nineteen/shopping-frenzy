@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7624881726277531176}
   - component: {fileID: -4211695947150884868}
   m_Layer: 0
-  m_Name: PhysicsMilk
+  m_Name: Milk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Milk
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 256
 --- !u!1001 &3399462754600419829
 PrefabInstance:
   m_ObjectHideFlags: 0

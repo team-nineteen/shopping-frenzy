@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: JoghurtGreen
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 32
 --- !u!1001 &7016360002450932057
 PrefabInstance:
   m_ObjectHideFlags: 0

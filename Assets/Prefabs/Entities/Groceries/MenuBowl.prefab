@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: MenuBowl
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 64
 --- !u!1001 &3024314747068818656
 PrefabInstance:
   m_ObjectHideFlags: 0

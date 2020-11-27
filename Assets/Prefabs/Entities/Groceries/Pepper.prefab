@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Pepper
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &8147938612294222897
 PrefabInstance:
   m_ObjectHideFlags: 0
