@@ -20,9 +20,12 @@ public class DebugView : MonoBehaviour
     [Tooltip("The text field displaying the timeSpentGoal")]
     public TextMeshProUGUI timeGoalText;
 
+    [Tooltip("The text field displaying the current seed")]
+    public TextMeshProUGUI seedText;
     SettingsData m_SettingsData;
     float m_AccumulatedDeltaTime = 0f;
     int m_AccumulatedFrameCount = 0;
+
     void Start()
     {
         m_SettingsData = SettingsData.Instance;
@@ -35,6 +38,10 @@ public class DebugView : MonoBehaviour
     public void SetDebugGoals(string ms, string ts) {
         moneyGoalText.text = "Money Goal: " + ms;
         timeGoalText.text = "Time Goal: " + ts;
+    }
+
+    public void SetSeedText(int seed) {
+        seedText.text = "Seed: " + seed;
     }
 
     void OnDebugChanged(bool newState)

@@ -20,7 +20,7 @@ public class SpawnRules : MonoBehaviour
     public int seed = 0;
 
     private Dictionary<Item.GroceryType, List<SpawnLocationData>> groceryGroups;
-
+    public DebugView m_DebugView;
     void Start()
     {
 #if UNITY_WEBGL
@@ -41,7 +41,7 @@ public class SpawnRules : MonoBehaviour
             seed = (int)(System.DateTime.Now.Ticks % ((long)int.MaxValue - (long)int.MinValue) + (long)int.MinValue);
             Random.InitState(seed);
         }
-        print("Generating grocery layout with seed: " + seed);
+        m_DebugView.SetSeedText(seed);
         InitializeSpawnLocations(spawnLocationsRoot);
 
         SpawnGroceries();

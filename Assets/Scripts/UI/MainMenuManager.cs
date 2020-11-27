@@ -2,14 +2,14 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
 
-    [Tooltip("The game version string.")]
-    public string version;
-    public bool stable;
+    private string version;
+    private bool stable;
     public TextMeshProUGUI versionText;
     public Button StartButton;
     public Button SettingsButton;
@@ -19,9 +19,14 @@ public class MainMenuManager : MonoBehaviour
     public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
+    private const string VERSION_PATH = "Assets/Version.txt";
+    private const string STABLE_NUM = ".0123456789";
+
     void Start()
     {
-        versionText.text = "Version: " + version + (stable ? " (Stable)" : " (Unstable)");
+        version = ReadVersionFromFile();
+        stable = IsStable(version);
+        versionText.text = "Version: " + version + (stable ? "" : " (Unstable)");
         StartButton.onClick.AddListener(OnStartButtonClicked);
         SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
         CreditsButton.onClick.AddListener(OnCreditsButtonClicked);
@@ -31,6 +36,21 @@ public class MainMenuManager : MonoBehaviour
         QuitButton.onClick.AddListener(OnQuitButtonClicked);
 #endif
         es = EventSystem.current;
+    }
+
+    static bool IsStable(string version)
+    {
+        foreach (char c in version)
+            if (!STABLE_NUM.Contains("" + c))
+                return false;
+        return true;
+    }
+    static string ReadVersionFromFile()
+    {
+        StreamReader reader = new StreamReader(VERSION_PATH);
+        string ver = reader.ReadToEnd().Trim();
+        reader.Close();
+        return ver;
     }
 
     void Update()
