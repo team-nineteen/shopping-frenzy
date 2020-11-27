@@ -136,7 +136,22 @@ PrefabInstance:
     - target: {fileID: -360379619617977288, guid: 2d45d5889dbdefe4792ca508fb068307,
         type: 3}
       propertyPath: version
-      value: 0.8.0+steps-and-boxes@1
+      value: 0.8.0+randomize-groceries@1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020788898990062898, guid: 2d45d5889dbdefe4792ca508fb068307,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020788898990062898, guid: 2d45d5889dbdefe4792ca508fb068307,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2020788898990062898, guid: 2d45d5889dbdefe4792ca508fb068307,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3314648237088459001, guid: 2d45d5889dbdefe4792ca508fb068307,
         type: 3}

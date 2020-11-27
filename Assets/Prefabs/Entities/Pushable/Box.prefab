@@ -341,4 +341,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceWhenHeld: 1.5
-  shouldAutoRotate: 1
+  shouldAutoRotate: 0

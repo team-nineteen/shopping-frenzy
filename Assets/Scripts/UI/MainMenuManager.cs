@@ -33,17 +33,21 @@ public class MainMenuManager : MonoBehaviour
         es = EventSystem.current;
     }
 
-    void Update() {
+    void Update()
+    {
         if (Input.GetButtonDown("Vertical")) OnNavigate();
     }
 
-    void OnNavigate() {
-        if (!es.currentSelectedGameObject) {
+    void OnNavigate()
+    {
+        if (!es.currentSelectedGameObject)
+        {
             es.SetSelectedGameObject(StartButton.gameObject);
         }
     }
 
-    public void OnHighlightButton(GameObject obj) {
+    public void OnHighlightButton(GameObject obj)
+    {
         es.SetSelectedGameObject(obj);
     }
     void OnStartButtonClicked()
@@ -60,6 +64,7 @@ public class MainMenuManager : MonoBehaviour
     {
         print("Show Credits");
     }
+
     void OnQuitButtonClicked()
     {
 #if UNITY_EDITOR

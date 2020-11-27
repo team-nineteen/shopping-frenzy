@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 4855175688463880813}
   - component: {fileID: 4478992591503369476}
   - component: {fileID: 1690117204420113470}
+  - component: {fileID: 8459927978291185453}
   m_Layer: 5
   m_Name: GroceryList
   m_TagString: Untagged
@@ -223,6 +224,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &8459927978291185453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197818635093478061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d6d0c5d5f085464f897edc3d6216368, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 600
 --- !u!1 &1345208392110111710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1746,7 +1760,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -16, y: -16}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &4367356855827772888
 CanvasRenderer:
@@ -1775,7 +1789,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[F]'
+  m_text: '[Q/E]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

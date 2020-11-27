@@ -13,6 +13,9 @@ public class SpawnRules : MonoBehaviour
     [Tooltip("How many to spawn of each grocery")]
     public int[] counts;
 
+    [Tooltip("Percentage of groceries to spawn in a webGL environment.")]
+    public float webGLCountMultiplier = .25f;
+
     public bool useSeed = false;
     public int seed = 0;
 
@@ -20,6 +23,12 @@ public class SpawnRules : MonoBehaviour
 
     void Start()
     {
+#if UNITY_WEBGL
+        for (int i = 0; i < counts.Length; i++) {
+            counts[i] = (int)Mathf.Max(1, counts[i] * webGLCountMultiplier);
+        }
+#endif
+        
         if (groceries.Length != counts.Length) throw new UnityException("Groceries and Counts MUST match!");
         groceryGroups = new Dictionary<Item.GroceryType, List<SpawnLocationData>>();
         foreach (Item.GroceryType t in System.Enum.GetValues(typeof(Item.GroceryType)))
@@ -27,6 +36,12 @@ public class SpawnRules : MonoBehaviour
             groceryGroups.Add(t, new List<SpawnLocationData>());
         }
         if (useSeed) Random.InitState(seed);
+        else
+        {
+            seed = (int)(System.DateTime.Now.Ticks % ((long)int.MaxValue - (long)int.MinValue) + (long)int.MinValue);
+            Random.InitState(seed);
+        }
+        print("Generating grocery layout with seed: " + seed);
         InitializeSpawnLocations(spawnLocationsRoot);
 
         SpawnGroceries();
@@ -87,7 +102,9 @@ public class SpawnRules : MonoBehaviour
         {
             // Determine category and location
             List<SpawnLocationData> groupLocations = groceryGroups[groceryItem.groceryGroup];
-            if (groupLocations.Count < 1) throw new UnityException("No spawning spaces left!"); // TODO, make enough spaces or select from a backup spawning space e.g. the floor.
+
+            // TODO, make enough spaces or select from a backup spawning space e.g. the floor.
+            if (groupLocations.Count < 1) throw new UnityException("No spawning spaces left for " + groceryItem.groceryGroup + "!");
             int r = Random.Range(0, groupLocations.Count);
             SpawnLocationData location = groupLocations[r];
 
@@ -102,8 +119,14 @@ public class SpawnRules : MonoBehaviour
                 // Decrement and remove location if used up.
                 location.uses--; spawned++;
             }
-            groupLocations.RemoveAt(r);
+            RemoveAll(location); // Remove all objects with same reference.
         }
+    }
+
+    void RemoveAll(SpawnLocationData location)
+    {
+        var vals = groceryGroups.Values;
+        foreach (var group in vals) group.RemoveAll(x => x == location);
     }
 
     Vector3 RandomlyDeviatedVector3(Vector3 center, float d)

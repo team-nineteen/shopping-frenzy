@@ -20,6 +20,7 @@ public class GroceryCart : MonoBehaviour
         bool boughtSomething = items.Count > 0;
         groceryList.PurchaseAll(items);
         if (boughtSomething && purchaseSound) purchaseSound.Play();
+        items.Clear();
     }
 
     void OnTriggerExit(Collider other)

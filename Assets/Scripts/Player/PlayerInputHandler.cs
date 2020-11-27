@@ -13,15 +13,19 @@ public class PlayerInputHandler : MonoBehaviour
     public bool isCrouchToggled {get; set;} = false;
     SettingsData m_SettingsData;
     private InGameMenuManager m_PauseMenu;
+    private GroceryListMenu m_GroceryListMenu;
     private WinMenuManager m_WinMenu;
     PlayerCharacterController m_PlayerCharacterController;
     bool m_InteractInputWasHeld;
+    bool m_ToggleListInputWasHeld;
 
     private void Start()
     {
         m_SettingsData = SettingsData.Instance;
         m_PauseMenu = FindObjectOfType<InGameMenuManager>();
         DebugUtility.HandleErrorIfNullFindObject<InGameMenuManager, PlayerInputHandler>(m_PauseMenu, this);
+        m_GroceryListMenu = FindObjectOfType<GroceryListMenu>();
+        DebugUtility.HandleErrorIfNullFindObject<GroceryListMenu, PlayerInputHandler>(m_GroceryListMenu, this);
         m_WinMenu = FindObjectOfType<WinMenuManager>();
         DebugUtility.HandleErrorIfNullFindObject<WinMenuManager, PlayerInputHandler>(m_WinMenu, this);
         m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
@@ -41,11 +45,14 @@ public class PlayerInputHandler : MonoBehaviour
             isCrouchToggled = !isCrouchToggled;
         if (!m_PauseMenu.gameObject.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu))
             m_PauseMenu.SetPauseMenuActivation(true);
+        if (GetToggleListInputDown())
+            m_GroceryListMenu.visible = !m_GroceryListMenu.visible;
     }
 
     private void LateUpdate()
     {
         m_InteractInputWasHeld = GetInteractInputHeld();
+        m_ToggleListInputWasHeld = GetToggleListInputHeld();
     }
 
     public bool CanProcessInput()
@@ -118,7 +125,17 @@ public class PlayerInputHandler : MonoBehaviour
         return false;
     }
 
-    public bool GetAimInputHeld()
+    public bool GetToggleListInputDown()
+    {
+        return GetToggleListInputHeld() && !m_ToggleListInputWasHeld;
+    }
+
+    public bool GetToggleListInputReleased()
+    {
+        return !GetToggleListInputHeld() && m_ToggleListInputWasHeld;
+    }
+
+    public bool GetToggleListInputHeld()
     {
         if (CanProcessInput())
         {

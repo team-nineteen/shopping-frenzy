@@ -4,10 +4,27 @@ using UnityEngine;
 
 public class AudioRandomizer : MonoBehaviour
 {
+
+    private AudioSource currentlyPlaying;
+    private AudioSource[] AudioSources;
+
+    //private bool randomizeOnEnd; // not implemented: If another song should be chosen instead of the same one.
     void Start()
     {
-        AudioSource[] AudioSources = GetComponents<AudioSource>();
+        RandomizeSong();
+    }
+
+    public void RandomizeSong()
+    {
+        if (currentlyPlaying) Stop();
+        AudioSources = GetComponents<AudioSource>();
         int i = Random.Range(0, AudioSources.Length);
-        AudioSources[i].Play();
+        currentlyPlaying = AudioSources[i];
+        currentlyPlaying.Play();
+    }
+
+    public void Stop()
+    {
+        currentlyPlaying.Stop();
     }
 }

@@ -161,7 +161,6 @@ public class GroceryList : MonoBehaviour
         if (SettingsData.Instance.highScore == null || SettingsData.Instance.highScore.score < score.score) {
             SettingsData.Instance.highScore = score;
         }
-        SettingsData.Instance.ClearSubscriptions();
         m_WinMenu.OnActivate(score);
     }
 
