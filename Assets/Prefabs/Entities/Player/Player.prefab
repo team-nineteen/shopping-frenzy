@@ -231,9 +231,9 @@ MonoBehaviour:
   playerCamera: {fileID: 8303093099919959869}
   audioSource: {fileID: 6312523899654289942}
   gravityDownForce: 20
-  groundCheckLayers:
+  solidCheckLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 567
   groundCheckDistance: 0.05
   maxSpeedOnGround: 6
   movementSharpnessOnGround: 8
