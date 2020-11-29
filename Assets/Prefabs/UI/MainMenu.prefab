@@ -1716,13 +1716,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47eeffb0179db1943b80b489a0f0905f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: <UNVERSIONED>
-  stable: 0
   versionText: {fileID: 6459021849256977701}
   StartButton: {fileID: 3696763866942906914}
   SettingsButton: {fileID: 4133945562873850900}
   CreditsButton: {fileID: 7077243471410257650}
   QuitButton: {fileID: 921669570492188180}
+  versionFile: {fileID: 4900000, guid: 93a77894047deaa4f88e1e6ec05637f8, type: 3}
   m_PauseMenu: {fileID: 0}
 --- !u!114 &582064573672525334
 MonoBehaviour:

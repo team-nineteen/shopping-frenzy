@@ -10,7 +10,12 @@ public class MainMenuManager : MonoBehaviour
 
     private string version;
     private bool stable;
+    
+    [Header("Version")]
+    public TextAsset versionFile;
     public TextMeshProUGUI versionText;
+    
+    [Header("Buttons")]
     public Button StartButton;
     public Button SettingsButton;
     public Button CreditsButton;
@@ -19,12 +24,12 @@ public class MainMenuManager : MonoBehaviour
     public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
-    private const string VERSION_PATH = "Assets/Version.txt";
+    //private const string VERSION_PATH = "Assets/Version.txt";
     private const string STABLE_NUM = ".0123456789";
 
     void Start()
     {
-        version = ReadVersionFromFile();
+        version = versionFile.text.Trim();
         stable = IsStable(version);
         versionText.text = "Version: " + version + (stable ? "" : " (Unstable)");
         StartButton.onClick.AddListener(OnStartButtonClicked);
@@ -44,13 +49,6 @@ public class MainMenuManager : MonoBehaviour
             if (!STABLE_NUM.Contains("" + c))
                 return false;
         return true;
-    }
-    static string ReadVersionFromFile()
-    {
-        StreamReader reader = new StreamReader(VERSION_PATH);
-        string ver = reader.ReadToEnd().Trim();
-        reader.Close();
-        return ver;
     }
 
     void Update()
