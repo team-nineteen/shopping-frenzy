@@ -17,7 +17,8 @@ public class Item : Holdable
         FROZEN = 128,   // Beef
         MILK = 256,     // Milk
         MISC = 512,     // Anything else
-        BACK = 1024     // Things in back area.
+        BACK = 1024,    // Things in back area.
+        STACKED = 2048  // Items that cn be stacked, like TP or cans.
     }
 
     [Tooltip("Purely used to link to an internal item ID (Should be set in prefab and never be changed).")]

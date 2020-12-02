@@ -36,8 +36,8 @@ public class SettingsData : ScriptableObject
         highScore = null;
         mouseSensitivity = 1.0f;
         fov = 70.0f;
-        sfxVolume = 1.0f;
-        musicVolume = 1.0f;
+        sfxVolume = 0.5f;
+        musicVolume = 0.5f;
         toggleCrouch = false;
         toggleSprint = false;
         toggleInteract = false;

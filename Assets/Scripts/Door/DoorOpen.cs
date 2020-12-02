@@ -10,6 +10,7 @@ public class DoorOpen : MonoBehaviour
     bool isClosing = false;
     float timer;
     float timerLength = 2f;
+    float gracePeriod = 1;
 
     public Transform door;
 
@@ -26,13 +27,14 @@ public class DoorOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gracePeriod > 0) gracePeriod -= Time.deltaTime;
         if (isOpening && timer > 0f)
         {
-           
+
             door.Translate(Vector3.up * Time.deltaTime * speed);
             timer -= Time.deltaTime;
         }
-        if (isOpening && timer <= 0f) 
+        if (isOpening && timer <= 0f)
         {
             isOpening = false;
             isClosing = true;
@@ -52,8 +54,10 @@ public class DoorOpen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (gracePeriod > 0) return;
         if (!isOpening)
-        {   if (!isClosing)
+        {
+            if (!isClosing)
             {
                 isOpening = true;
                 timer = timerLength;
