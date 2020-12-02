@@ -9,8 +9,11 @@ public class ItemHold : MonoBehaviour
     [Tooltip("Reference to the player crosshair")]
     public Crosshair crosshair;
 
+    [Tooltip("The maximum height above the player you can pick items from")]
+    public float interactYRange = .25f;
+
     [Tooltip("The distance from the camera that you can pickup items from")]
-    public float interactRange = 1.75f;
+    public float interactRange = 1.85f;
 
     [Tooltip("The distance from the holding position required such that the item becomes uninterested in you")]
     public float loseItemRange = 2.5f;
@@ -44,7 +47,9 @@ public class ItemHold : MonoBehaviour
         Ray ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (Physics.Raycast(ray, out RaycastHit hit, interactRange, -1, QueryTriggerInteraction.Ignore))
         {
-            m_PointingAtItem = hit.collider.GetComponentInParent<Holdable>();
+            Holdable h = hit.collider.GetComponentInParent<Holdable>();
+            if (h && hit.point.y - m_Camera.transform.position.y <= interactYRange)
+                m_PointingAtItem = h;
         }
 
         // If we are currently not holding an item already.

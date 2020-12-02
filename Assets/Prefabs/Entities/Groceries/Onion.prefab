@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Onion
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &4251065843830308047
 PrefabInstance:
   m_ObjectHideFlags: 0

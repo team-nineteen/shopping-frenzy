@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Carrot
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &7688830539862487119
 PrefabInstance:
   m_ObjectHideFlags: 0

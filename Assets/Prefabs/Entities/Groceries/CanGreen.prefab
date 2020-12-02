@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: CanGreen
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &1185812849067701517
 PrefabInstance:
   m_ObjectHideFlags: 0

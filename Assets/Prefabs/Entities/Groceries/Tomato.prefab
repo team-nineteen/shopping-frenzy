@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Tomato
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &8438235683512097763
 PrefabInstance:
   m_ObjectHideFlags: 0

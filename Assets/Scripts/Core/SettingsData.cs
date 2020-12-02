@@ -20,13 +20,14 @@ public class SettingsData : ScriptableObject
         }
     }
 
-    private Score highScore;
+    public Score highScore { get; set; }
     public UnityAction<float> onFovChanged;
     public UnityAction<bool> onDebugChanged;
     public UnityAction<float> onSfxVolumeChanged;
     public UnityAction<float> onMusicVolumeChanged;
 
-    public void ClearSubscriptions() {
+    public void ClearSubscriptions()
+    {
         onFovChanged = null;
         onDebugChanged = null;
     }

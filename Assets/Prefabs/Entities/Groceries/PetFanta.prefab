@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1435622289445591068}
   - component: {fileID: 8754529877425299103}
   m_Layer: 0
-  m_Name: PetCola
+  m_Name: PetFanta
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,8 +61,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.12, y: 0.6, z: 0.12}
-  m_Center: {x: 0, y: 0.3, z: 0}
+  m_Size: {x: 0.108, y: 0.54, z: 0.108}
+  m_Center: {x: 0, y: 0.27, z: 0}
 --- !u!114 &8754529877425299103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: PetFanta
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &7375064815017332595
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,15 +142,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012765468910, guid: 0427c64d8fdbee04f9a40fdde44b082d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 4000012765468910, guid: 0427c64d8fdbee04f9a40fdde44b082d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 4000012765468910, guid: 0427c64d8fdbee04f9a40fdde44b082d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0427c64d8fdbee04f9a40fdde44b082d, type: 3}

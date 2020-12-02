@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Meat
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 128
 --- !u!1001 &405489335111840633
 PrefabInstance:
   m_ObjectHideFlags: 0
