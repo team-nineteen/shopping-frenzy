@@ -39,7 +39,7 @@ public class FenceOpen : MonoBehaviour
         {
             isOpening = false;
             wait = true;
-            timer = timerLength;
+            timer = timerLength *2;
         }
 
         if (wait && timer > 0f)
@@ -52,7 +52,7 @@ public class FenceOpen : MonoBehaviour
         {
             wait = false;
             isClosing = true;
-            timer = timerLength;
+            timer = timerLength ;
         }
 
 
