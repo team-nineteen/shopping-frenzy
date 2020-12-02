@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: BeerBoxBlue
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1024
 --- !u!1001 &7450557667316464252
 PrefabInstance:
   m_ObjectHideFlags: 0

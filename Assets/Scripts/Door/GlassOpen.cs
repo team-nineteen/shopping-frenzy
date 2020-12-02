@@ -13,6 +13,7 @@ public class GlassOpen : MonoBehaviour
     bool wait = false;
     float timer;
     float timerLength = 1f;
+    float gracePeriod = 1;
 
     public Transform doorLeft;
     public Transform doorRight;
@@ -31,6 +32,7 @@ public class GlassOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gracePeriod > 0) gracePeriod -= Time.deltaTime;
         if (isOpening && timer > 0f)
         {
             doorLeft.Translate(Vector3.right * Time.deltaTime *speed);
@@ -76,6 +78,7 @@ public class GlassOpen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (gracePeriod > 0) return;
         if (!isOpening)
         {  
             if (!isClosing)

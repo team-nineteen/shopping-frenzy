@@ -64,6 +64,7 @@ public class ItemRegistry
         Register(++size, "SoilBag", 420, "Bag of Dirt");
         Register(++size, "SprayBottle", 280, "Cleaning Spray");
         Register(++size, "StrawberryPlant", 170, "Strawberry Plant");
+        Register(++size, "ToiletPaper", 40, "Toilet Paper");
         Register(++size, "Tomato", 50);
     }
 

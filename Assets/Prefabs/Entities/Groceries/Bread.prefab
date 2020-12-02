@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Bread
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 2
 --- !u!1001 &2028875588118410043
 PrefabInstance:
   m_ObjectHideFlags: 0

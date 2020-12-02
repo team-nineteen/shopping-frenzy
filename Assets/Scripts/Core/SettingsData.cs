@@ -20,13 +20,14 @@ public class SettingsData : ScriptableObject
         }
     }
 
-    private Score highScore;
+    public Score highScore { get; set; }
     public UnityAction<float> onFovChanged;
     public UnityAction<bool> onDebugChanged;
     public UnityAction<float> onSfxVolumeChanged;
     public UnityAction<float> onMusicVolumeChanged;
 
-    public void ClearSubscriptions() {
+    public void ClearSubscriptions()
+    {
         onFovChanged = null;
         onDebugChanged = null;
     }
@@ -35,8 +36,8 @@ public class SettingsData : ScriptableObject
         highScore = null;
         mouseSensitivity = 1.0f;
         fov = 70.0f;
-        sfxVolume = 1.0f;
-        musicVolume = 1.0f;
+        sfxVolume = 0.5f;
+        musicVolume = 0.5f;
         toggleCrouch = false;
         toggleSprint = false;
         toggleInteract = false;

@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: DoughGreen
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 8
 --- !u!1001 &7605681314573441320
 PrefabInstance:
   m_ObjectHideFlags: 0

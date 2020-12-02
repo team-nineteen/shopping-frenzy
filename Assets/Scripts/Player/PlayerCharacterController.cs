@@ -14,7 +14,7 @@ public class PlayerCharacterController : MonoBehaviour
     [Tooltip("Force applied downward when in the air")]
     public float gravityDownForce = 20f;
     [Tooltip("Physic layers checked to consider the player grounded")]
-    public LayerMask groundCheckLayers = -1;
+    public LayerMask solidCheckLayers = -1;
     [Tooltip("distance from the bottom of the character controller capsule to test for grounded")]
     public float groundCheckDistance = 0.05f;
 
@@ -178,7 +178,7 @@ public class PlayerCharacterController : MonoBehaviour
         if (Time.time >= m_LastTimeJumped + k_JumpGroundingPreventionTime)
         {
             // if we're grounded, collect info about the ground normal with a downward capsule cast representing our character capsule
-            if (Physics.CapsuleCast(GetCapsuleBottomHemisphere(), GetCapsuleTopHemisphere(m_Controller.height), m_Controller.radius, Vector3.down, out RaycastHit hit, chosenGroundCheckDistance, groundCheckLayers, QueryTriggerInteraction.Ignore))
+            if (Physics.CapsuleCast(GetCapsuleBottomHemisphere(), GetCapsuleTopHemisphere(m_Controller.height), m_Controller.radius, Vector3.down, out RaycastHit hit, chosenGroundCheckDistance, solidCheckLayers, QueryTriggerInteraction.Ignore))
             {
                 // storing the upward direction for the surface found
                 m_GroundNormal = hit.normal;
@@ -307,7 +307,7 @@ public class PlayerCharacterController : MonoBehaviour
 
         // detect obstructions to adjust velocity accordingly
         m_LatestImpactSpeed = Vector3.zero;
-        if (Physics.CapsuleCast(capsuleBottomBeforeMove, capsuleTopBeforeMove, m_Controller.radius, characterVelocity.normalized, out RaycastHit hit, characterVelocity.magnitude * Time.deltaTime, -1, QueryTriggerInteraction.Ignore))
+        if (Physics.CapsuleCast(capsuleBottomBeforeMove, capsuleTopBeforeMove, m_Controller.radius, characterVelocity.normalized, out RaycastHit hit, characterVelocity.magnitude * Time.deltaTime, solidCheckLayers, QueryTriggerInteraction.Ignore))
         {
             // We remember the last impact speed because the fall damage logic might need it
             m_LatestImpactSpeed = characterVelocity;
@@ -377,7 +377,7 @@ public class PlayerCharacterController : MonoBehaviour
                     GetCapsuleBottomHemisphere(),
                     GetCapsuleTopHemisphere(capsuleHeightStanding),
                     m_Controller.radius,
-                    -1,
+                    solidCheckLayers,
                     QueryTriggerInteraction.Ignore);
                 foreach (Collider c in standingOverlaps)
                 {

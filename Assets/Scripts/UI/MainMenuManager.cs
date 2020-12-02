@@ -2,9 +2,20 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
+using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
+
+    private string version;
+    private bool stable;
+    
+    [Header("Version")]
+    public TextAsset versionFile;
+    public TextMeshProUGUI versionText;
+    
+    [Header("Buttons")]
     public Button StartButton;
     public Button SettingsButton;
     public Button CreditsButton;
@@ -13,8 +24,14 @@ public class MainMenuManager : MonoBehaviour
     public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
+    //private const string VERSION_PATH = "Assets/Version.txt";
+    private const string STABLE_NUM = ".0123456789";
+
     void Start()
     {
+        version = versionFile.text.Trim();
+        stable = IsStable(version);
+        versionText.text = "Version: " + version + (stable ? "" : " (Unstable)");
         StartButton.onClick.AddListener(OnStartButtonClicked);
         SettingsButton.onClick.AddListener(OnSettingsButtonClicked);
         CreditsButton.onClick.AddListener(OnCreditsButtonClicked);
@@ -26,17 +43,29 @@ public class MainMenuManager : MonoBehaviour
         es = EventSystem.current;
     }
 
-    void Update() {
+    static bool IsStable(string version)
+    {
+        foreach (char c in version)
+            if (!STABLE_NUM.Contains("" + c))
+                return false;
+        return true;
+    }
+
+    void Update()
+    {
         if (Input.GetButtonDown("Vertical")) OnNavigate();
     }
 
-    void OnNavigate() {
-        if (!es.currentSelectedGameObject) {
+    void OnNavigate()
+    {
+        if (!es.currentSelectedGameObject)
+        {
             es.SetSelectedGameObject(StartButton.gameObject);
         }
     }
 
-    public void OnHighlightButton(GameObject obj) {
+    public void OnHighlightButton(GameObject obj)
+    {
         es.SetSelectedGameObject(obj);
     }
     void OnStartButtonClicked()
@@ -53,6 +82,7 @@ public class MainMenuManager : MonoBehaviour
     {
         print("Show Credits");
     }
+
     void OnQuitButtonClicked()
     {
 #if UNITY_EDITOR

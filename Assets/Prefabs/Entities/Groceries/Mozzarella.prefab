@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Mozzarella
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 32
 --- !u!1001 &792861743901277243
 PrefabInstance:
   m_ObjectHideFlags: 0

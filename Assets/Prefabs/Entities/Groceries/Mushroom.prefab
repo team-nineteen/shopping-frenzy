@@ -81,6 +81,7 @@ MonoBehaviour:
   registeredName: Mushroom
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 512
 --- !u!1001 &7983682653723699737
 PrefabInstance:
   m_ObjectHideFlags: 0

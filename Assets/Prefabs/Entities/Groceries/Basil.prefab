@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Basil
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1024
 --- !u!1001 &3095574697324597622
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: SoapBottle
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 16
 --- !u!1001 &8151732674500122229
 PrefabInstance:
   m_ObjectHideFlags: 0

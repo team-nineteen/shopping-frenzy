@@ -13,11 +13,17 @@ public class WinMenuManager : MonoBehaviour
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI TimeText;
     public Button ContinueButton;
+    public AudioSource WinMusic;
     private EventSystem es;
+
+    private AudioRandomizer m_AudioRandomizer;
 
     public bool isActivated { get; private set; }
     void Start()
     {
+        m_AudioRandomizer = FindObjectOfType<AudioRandomizer>();
+        DebugUtility.HandleErrorIfNullFindObject<AudioRandomizer, WinMenuManager>(m_AudioRandomizer, this);
+
         ContinueButton.onClick.AddListener(OnContinue);
         es = EventSystem.current;
         root.SetActive(false);
@@ -76,6 +82,9 @@ public class WinMenuManager : MonoBehaviour
         es.SetSelectedGameObject(ContinueButton.gameObject);
         isActivated = true;
         root.SetActive(true);
+
+        m_AudioRandomizer.Stop();
+        WinMusic.Play();
     }
 
     public void OnHighlightButton(GameObject obj)
@@ -84,6 +93,7 @@ public class WinMenuManager : MonoBehaviour
     }
     void OnContinue()
     {
+        SettingsData.Instance.ClearSubscriptions();
         SceneManager.LoadScene(0); // Back to main menu
     }
 

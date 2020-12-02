@@ -80,6 +80,7 @@ MonoBehaviour:
   registeredName: Lemon
   discountFactor: 0
   discountAmount: 0
+  groceryGroup: 1
 --- !u!1001 &4343611991041271078
 PrefabInstance:
   m_ObjectHideFlags: 0

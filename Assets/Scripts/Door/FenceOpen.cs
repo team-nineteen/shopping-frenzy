@@ -10,6 +10,7 @@ public class FenceOpen : MonoBehaviour
     bool isClosing = false;
     bool wait = false;
     float timer;
+    float gracePeriod = 1;
     float timerLength = 1f;
 
     public Transform door;
@@ -29,6 +30,7 @@ public class FenceOpen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (gracePeriod > 0) gracePeriod -= Time.deltaTime;
         if (isOpening && timer > 0f)
         {
             door.Rotate(Vector3.up, Time.deltaTime *speed);
@@ -39,7 +41,7 @@ public class FenceOpen : MonoBehaviour
         {
             isOpening = false;
             wait = true;
-            timer = timerLength;
+            timer = timerLength *2;
         }
 
         if (wait && timer > 0f)
@@ -52,7 +54,7 @@ public class FenceOpen : MonoBehaviour
         {
             wait = false;
             isClosing = true;
-            timer = timerLength;
+            timer = timerLength ;
         }
 
 
@@ -71,6 +73,7 @@ public class FenceOpen : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (gracePeriod > 0) return;
         if (!isOpening)
         {
             if (!isClosing)
