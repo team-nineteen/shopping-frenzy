@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using TMPro;
 public class InGameMenuManager : MonoBehaviour
 {
 
@@ -33,8 +34,10 @@ public class InGameMenuManager : MonoBehaviour
     public Toggle interactToggle;
     [Tooltip("Button component for going back")]
     public Button backButton;
-    [Tooltip("Button component for going back to game/main menu")]
+    [Tooltip("Button component for going back to game/settings menu")]
     public Button returnToGameButton;
+    [Tooltip("Button component for going back to main menu")]
+    public Button backToMenuButton;
 
     [Tooltip("Whether to apply certain game-pause, cursor-lock mechanics")]
     public bool isInGame = true;
@@ -59,9 +62,12 @@ public class InGameMenuManager : MonoBehaviour
         crouchToggle.onValueChanged.AddListener(OnCrouchToggle);
         interactToggle.onValueChanged.AddListener(OnInteractToggle);
         backButton.onClick.AddListener(OnBackButtonClicked);
+        backToMenuButton.onClick.AddListener(OnBackToMenuButtonClicked);
 
         UpdateValues();
 
+        if (!isInGame) returnToGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Return to Menu";
+        backToMenuButton.gameObject.SetActive(isInGame);
         menuRoot.SetActive(false);
         controlRoot.SetActive(false);
     }
@@ -142,6 +148,10 @@ public class InGameMenuManager : MonoBehaviour
                 EventSystem.current.SetSelectedGameObject(FindObjectOfType<Button>().gameObject);
             }
         }
+    }
+
+    void OnBackToMenuButtonClicked() {
+        SceneManager.LoadScene(0);
     }
 
     void OnSensitivityChanged(float newValue)
