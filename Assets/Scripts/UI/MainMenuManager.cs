@@ -21,10 +21,10 @@ public class MainMenuManager : MonoBehaviour
     public Button CreditsButton;
     public Button QuitButton;
 
+    public bool skipIntro = false;
     public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
-    //private const string VERSION_PATH = "Assets/Version.txt";
     private const string STABLE_NUM = ".0123456789";
 
     void Start()
@@ -70,7 +70,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void OnStartButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + (skipIntro ? 2 : 1) );
     }
 
     void OnSettingsButtonClicked()
