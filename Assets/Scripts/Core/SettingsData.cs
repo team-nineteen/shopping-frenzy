@@ -42,6 +42,8 @@ public class SettingsData : ScriptableObject
         toggleSprint = false;
         toggleInteract = false;
         debugEnabled = false;
+        hintsEnabled = true;
+        skipIntro = false;
     }
 
     private float _mouseSensitivity;
@@ -145,5 +147,29 @@ public class SettingsData : ScriptableObject
         }
     }
 
+    private bool _hintsEnabled;
+    public bool hintsEnabled
+    {
+        get
+        {
+            return _hintsEnabled;
+        }
+        set
+        {
+            _hintsEnabled = value;
+        }
+    }
+    private bool _skipIntro;
+    public bool skipIntro
+    {
+        get
+        {
+            return _skipIntro;
+        }
+        set
+        {
+            _skipIntro = value;
+        }
+    }
 
 }

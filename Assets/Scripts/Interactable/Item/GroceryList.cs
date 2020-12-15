@@ -161,7 +161,7 @@ public class GroceryList : MonoBehaviour
         if (SettingsData.Instance.highScore == null || SettingsData.Instance.highScore.score < score.score) {
             SettingsData.Instance.highScore = score;
         }
-        m_WinMenu.OnActivate(score);
+        m_WinMenu.OnActivate(score, moneySpentGoalInCents, timeGoalInSeconds);
     }
 
     public void Attach(Item item)
