@@ -20,3 +20,12 @@ Cash Register Purchase by Zott820
 =============================== GRAPHICS ================================
 
 FoodAndGrocery               https://assetstore.unity.com/packages/3d/props/food/food-grocery-items-low-poly-75494
+Toilet Paper - Proto Series  https://assetstore.unity.com/packages/3d/props/toilet-paper-roll-proto-series-165615
+PlayerCharacterController    https://learn.unity.com/project/fps-template
+
+================================= MISC ==================================
+Everything else, such as game design, level design, code, story, lore, art, etc.:
+Group 19
+
+Special thanks:
+Leiden University - Introduction Video Game Making
