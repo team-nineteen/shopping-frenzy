@@ -1,1 +1,1 @@
-1.0.0+quality-of-life@1
+1.0.0-pre1
