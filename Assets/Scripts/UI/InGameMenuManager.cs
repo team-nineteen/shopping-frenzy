@@ -19,6 +19,10 @@ public class InGameMenuManager : MonoBehaviour
     [Tooltip("Toggle component for showing debug")]
     public Toggle debugToggle;
     [Tooltip("Button component for showing controls")]
+    public Toggle hintsToggle;
+    [Tooltip("Button component for showing hints")]
+    public Toggle introToggle;
+    [Tooltip("Button component for showing intro")]
     public Button controlsButton;
 
     [Header("Control Menu Stuff")]
@@ -54,6 +58,8 @@ public class InGameMenuManager : MonoBehaviour
         musicVolumeSlider.onValueChanged.AddListener(OnMusicChanged);
         debugToggle.onValueChanged.AddListener(OnDebugChanged);
         controlsButton.onClick.AddListener(OnControlsClicked);
+        hintsToggle.onValueChanged.AddListener(OnHintsChanged);
+        introToggle.onValueChanged.AddListener(OnIntroChanged);
         returnToGameButton.onClick.AddListener(OnReturnToGameButtonClicked);
 
         // CONTROLS MENU
@@ -78,6 +84,8 @@ public class InGameMenuManager : MonoBehaviour
         sfxVolumeSlider.value = m_SettingsData.sfxVolume;
         musicVolumeSlider.value = m_SettingsData.musicVolume;
         debugToggle.isOn = m_SettingsData.debugEnabled;
+        hintsToggle.isOn = m_SettingsData.hintsEnabled;
+        introToggle.isOn = m_SettingsData.skipIntro;
         sensitivitySlider.value = m_SettingsData.mouseSensitivity;
         sprintToggle.isOn = m_SettingsData.toggleSprint;
         crouchToggle.isOn = m_SettingsData.toggleCrouch;
@@ -175,6 +183,15 @@ public class InGameMenuManager : MonoBehaviour
     void OnDebugChanged(bool newValue)
     {
         m_SettingsData.debugEnabled = newValue;
+    }
+    void OnHintsChanged(bool newValue)
+    {
+        m_SettingsData.hintsEnabled = newValue;
+    }
+
+    void OnIntroChanged(bool newValue)
+    {
+        m_SettingsData.skipIntro = newValue;
     }
     void OnControlsClicked()
     {

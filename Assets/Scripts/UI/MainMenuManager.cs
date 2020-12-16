@@ -10,18 +10,16 @@ public class MainMenuManager : MonoBehaviour
 
     private string version;
     private bool stable;
-    
+
     [Header("Version")]
     public TextAsset versionFile;
     public TextMeshProUGUI versionText;
-    
+
     [Header("Buttons")]
     public Button StartButton;
     public Button SettingsButton;
     public Button CreditsButton;
     public Button QuitButton;
-
-    public bool skipIntro = false;
     public InGameMenuManager m_PauseMenu;
     private EventSystem es;
 
@@ -41,6 +39,7 @@ public class MainMenuManager : MonoBehaviour
         QuitButton.onClick.AddListener(OnQuitButtonClicked);
 #endif
         es = EventSystem.current;
+        Time.timeScale = 1.0f;
     }
 
     static bool IsStable(string version)
@@ -70,7 +69,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void OnStartButtonClicked()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + (skipIntro ? 2 : 1) );
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + (SettingsData.Instance.skipIntro ? 2 : 1));
     }
 
     void OnSettingsButtonClicked()

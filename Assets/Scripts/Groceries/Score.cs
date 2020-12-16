@@ -7,15 +7,16 @@ public class Score : MonoBehaviour
     private const string spentMoneyTextFormat = "€{0},{1:D2}";
     private const string spentTimeTextFormat = "{0}:{1:D2}";
     const int BS = 1000; // Base score
+    const int minimumTimeScore = BS / 10; // The lowest score you can get purely from a bad time.
     public enum Rank
     {
         S = BS, // At least the Base score. (really good time)
         A = (int)(BS * 0.9f), // at least 90%
         B = (int)(BS * 0.8f), // at least 80%
-        C = (int)(BS * 0.7f), // ...
-        D = (int)(BS * 0.6f),
-        E = (int)(BS * 0.5f),
-        F = (int)(BS * 0.4f),
+        C = (int)(BS * 0.6f), // ...
+        D = (int)(BS * 0.4f),
+        E = (int)(BS * 0.2f),
+        F = 0,
         Z = -1 // Base case
     }
 
@@ -39,8 +40,9 @@ public class Score : MonoBehaviour
     // score = BASE - (0.5 * cents_spent_too_much) - f(timeSpent, timeGoal)
     public void CalculateScore(int moneyGoal, int timeGoal)
     {
-        // Every second late is deducted from score, every second early is added, arriving twice as late yields 0 score.
-        this.score = (int)Mathf.Round((float)parabolaFromThreePoints(new Vector2(0, BS * 4f / 3f), new Vector2(timeGoal, BS), new Vector2(2 * timeGoal, 0), timeInSecondsSpent));
+        // Every second late is deducted from score, every second early is added, arriving three times as late yields 0 score.
+        this.score = (int)Mathf.Round((float)parabolaFromThreePoints(new Vector2(0, BS * 9f / 8f), new Vector2(timeGoal, BS), new Vector2(3 * timeGoal, 0), timeInSecondsSpent));
+        this.score = Mathf.Max(this.score, minimumTimeScore);
         int moneyDiff = moneySpent - moneyGoal;
         // Every ct too much is .5pt deducted, every ct less is 5pt added
         this.score -= (int) (moneyDiff * (moneyDiff > 0 ? 0.5f : 5));

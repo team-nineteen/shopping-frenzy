@@ -272,6 +272,9 @@ MonoBehaviour:
   itemGravitationSharpness: 50
   rotationTorque: 100
   itemGravitationFriction: 0.8
+  solidCheckLayers:
+    serializedVersion: 2
+    m_Bits: 567
 --- !u!1 &7442781921941657531
 GameObject:
   m_ObjectHideFlags: 0
