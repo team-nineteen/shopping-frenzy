@@ -2,15 +2,15 @@
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    
+
     [Tooltip("Additional sensitivity multiplier for WebGL")]
     public float webglLookSensitivityMultiplier = 0.25f;
     [Tooltip("Limit to consider an input when using a trigger on a controller")]
     public bool invertYAxis = false;
 
-    public bool isInteractToggled {get; set;} = false;
-    public bool isSprintToggled {get; set;} = false;
-    public bool isCrouchToggled {get; set;} = false;
+    public bool isInteractToggled { get; set; } = false;
+    public bool isSprintToggled { get; set; } = false;
+    public bool isCrouchToggled { get; set; } = false;
     SettingsData m_SettingsData;
     private InGameMenuManager m_PauseMenu;
     private GroceryListMenu m_GroceryListMenu;
@@ -30,23 +30,26 @@ public class PlayerInputHandler : MonoBehaviour
         DebugUtility.HandleErrorIfNullFindObject<WinMenuManager, PlayerInputHandler>(m_WinMenu, this);
         m_PlayerCharacterController = GetComponent<PlayerCharacterController>();
         DebugUtility.HandleErrorIfNullGetComponent<PlayerCharacterController, PlayerInputHandler>(m_PlayerCharacterController, this, gameObject);
-        
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        if (m_SettingsData.toggleInteract && Input.GetButtonDown(GameConstants.k_ButtonNameInteract))
-            isInteractToggled = !isInteractToggled;
-        if (m_SettingsData.toggleSprint && Input.GetButtonDown(GameConstants.k_ButtonNameSprint))
-            isSprintToggled = !isSprintToggled;
-        if (m_SettingsData.toggleCrouch && Input.GetButtonDown(GameConstants.k_ButtonNameCrouch))
-            isCrouchToggled = !isCrouchToggled;
-        if (!m_PauseMenu.gameObject.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu))
-            m_PauseMenu.SetPauseMenuActivation(true);
-        if (GetToggleListInputDown())
-            m_GroceryListMenu.visible = !m_GroceryListMenu.visible;
+        if (!m_WinMenu.isActivated)
+        {
+            if (m_SettingsData.toggleInteract && Input.GetButtonDown(GameConstants.k_ButtonNameInteract))
+                isInteractToggled = !isInteractToggled;
+            if (m_SettingsData.toggleSprint && Input.GetButtonDown(GameConstants.k_ButtonNameSprint))
+                isSprintToggled = !isSprintToggled;
+            if (m_SettingsData.toggleCrouch && Input.GetButtonDown(GameConstants.k_ButtonNameCrouch))
+                isCrouchToggled = !isCrouchToggled;
+            if (!m_PauseMenu.gameObject.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu))
+                m_PauseMenu.SetPauseMenuActivation(true);
+            if (GetToggleListInputDown())
+                m_GroceryListMenu.visible = !m_GroceryListMenu.visible;
+        }
     }
 
     private void LateUpdate()

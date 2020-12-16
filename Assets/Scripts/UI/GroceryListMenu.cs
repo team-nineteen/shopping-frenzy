@@ -11,7 +11,7 @@ public class GroceryListMenu : MonoBehaviour
     private float visibleX;
     void Start()
     {
-        visible = true;
+        visible = !SettingsData.Instance.hintsEnabled;
         visibleX = transform.localPosition.x;
         invisibleX = visibleX + 600;
     }

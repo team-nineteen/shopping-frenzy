@@ -26,6 +26,8 @@ public class ItemHold : MonoBehaviour
 
     [Tooltip("How quickly an item will settle in the center of the screen.")]
     public float itemGravitationFriction = 0.5f;
+    [Tooltip("What Layers can be held")]
+    public LayerMask solidCheckLayers = -1;
     public Holdable m_HeldItem { get; private set; }
     private PlayerInputHandler m_Input;
     private Camera m_Camera;
@@ -45,7 +47,7 @@ public class ItemHold : MonoBehaviour
 
         // Cast a ray through the center of the screen.
         Ray ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-        if (Physics.Raycast(ray, out RaycastHit hit, interactRange, -1, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out RaycastHit hit, interactRange, solidCheckLayers, QueryTriggerInteraction.Ignore))
         {
             Holdable h = hit.collider.GetComponentInParent<Holdable>();
             if (h && hit.point.y - m_Camera.transform.position.y <= interactYRange)
