@@ -52,8 +52,8 @@ public class GroceryList : MonoBehaviour
         m_DebugView = FindObjectOfType<DebugView>();
         m_WinMenu = FindObjectOfType<WinMenuManager>();
 
-        moneySpentText.text = "Money Spent: " + Score.MoneyString(0);
-        timeSpentText.text = "Time Spent: " + Score.TimeString(0);
+        moneySpentText.text = Score.MoneyString(0);
+        timeSpentText.text = Score.TimeString(0);
 
         itemIndexMap = new Dictionary<int, int>();
         groceryItemIdMap = new Dictionary<int, GroceryItem>();
@@ -81,7 +81,7 @@ public class GroceryList : MonoBehaviour
             if (newTime > timeSpentInSeconds)
             {
                 timeSpentInSeconds = newTime;
-                timeSpentText.text = "Time Spent: " + Score.TimeString(timeSpentInSeconds);
+                timeSpentText.text = Score.TimeString(timeSpentInSeconds);
                 SetTextColor(timeSpentText, timeSpentInSeconds, timeGoalInSeconds);
             }
             AnimateGroceriesInCart();
@@ -148,7 +148,7 @@ public class GroceryList : MonoBehaviour
     public void PurchaseAll(List<Item> itemList)
     {
         foreach (var item in itemList) Purchase(item);
-        moneySpentText.text = "Money Spent: " + Score.MoneyString(moneySpentInCents);
+        moneySpentText.text = Score.MoneyString(moneySpentInCents);
         SetTextColor(moneySpentText, moneySpentInCents, moneySpentGoalInCents);
         if (acquiredItemCount >= maxGroceries) EndGame();
     }
